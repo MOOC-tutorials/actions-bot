@@ -1,0 +1,25 @@
+{
+  "name": "static-github-app",
+  "version": "0.1.0",
+  "description": "A Github App for a static web project",
+  "main": "server.js",
+  "scripts": {
+    "start": "probot run ./server.js"
+  },
+  "dependencies": {
+    "probot": "^9.3.1",
+    "jsdom": "^15.1.1",
+    "mongoose": "^5.7.4"
+  },
+  "engines": {
+    "node": "8.1.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/join/a4a9f6b1-3ba7-4201-8097-cbc4f11eadb1"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "server"
+  ]
+}
