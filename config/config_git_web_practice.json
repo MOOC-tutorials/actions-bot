@@ -397,7 +397,8 @@
                     "title": "Final del ejercicio",
                     "body": "**Los errores fueron corregidos**\n\n Elementos pendientes:\n\n - [ ] Hacer un **pull** para obtener los últimos cambios realizados por el equipo automático.\n\n- [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio."},
                 "actions": [
-                    { "type": "GRADE" },
+                    { "type": "GRADE",
+                      "files": [] },
                     {   "type": "DOM",
                         "files": [
                             {

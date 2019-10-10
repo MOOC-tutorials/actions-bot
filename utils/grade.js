@@ -19,6 +19,6 @@ exports.addAttempt = async function(context, owner, repo, title){
     context.log(att);
 };
 
-exports.grade = function(context){
+exports.grade = function(files, context){
     //TODO: set grade
 };

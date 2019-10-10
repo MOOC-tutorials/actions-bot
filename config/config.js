@@ -17,6 +17,9 @@ exports.getConfig = function(repoName){
 const DOM = 'DOM';
 const {domValidation, domModification} = require('../utils/dom');
 
+const GRADE = 'GRADE';
+const {grade} = require('../utils/grade');
+
 exports.validators = {[DOM]: domValidation};
-exports.modifiers = {[DOM]: domModification};
+exports.modifiers = {[DOM]: domModification, [GRADE]: grade};
 
