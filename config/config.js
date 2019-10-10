@@ -15,11 +15,16 @@ exports.getConfig = function(repoName){
 
 // Modifiers and validators by type
 const DOM = 'DOM';
-const {domValidation, domModification} = require('../utils/dom');
+const {domValidation, domModification} = require('./logic/dom');
 
 const GRADE = 'GRADE';
-const {grade} = require('../utils/grade');
+const {exerciseGrade} = require('./logic/grade');
+
+const APPEND = 'APPEND';
+const {fileAppendModification} = require('./logic/append');
 
 exports.validators = {[DOM]: domValidation};
-exports.modifiers = {[DOM]: domModification, [GRADE]: grade};
+exports.modifiers = {[DOM]: domModification,
+                     [GRADE]: exerciseGrade,
+                     [APPEND]: fileAppendModification};
 
