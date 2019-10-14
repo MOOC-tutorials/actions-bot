@@ -3,7 +3,8 @@ const {checkIssuesEnable} = require('../utils/issue');
 
 exports.handleInstallation = async function(robot, context){
     const api = context.github;
-    const {action, installation, repositories_added} = context.payload;
+    const {action, installation} = context.payload;
+    const repositories_added = context.payload.repositories_added || context.payload.repositories;
     context.log(action);
     if(action === 'added' || action === 'created'){
         const {account} = installation;
