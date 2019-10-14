@@ -3,6 +3,7 @@ const {getConfig, validators,
        modifiers, VALID_REPOSITORIES} = require('../config/config');
 const {closeOpenIssues, conventionIssue} = require('../utils/issue');
 const {addAttempt} = require('../utils/grade');
+const {checkIssuesEnable} = require('../utils/issue');
 
 function validateFileModifications(fileText, fixFileInfo){
   // Checks if was modified and if file is the expected one 
@@ -130,6 +131,16 @@ async function invalidCommit(context, fixInfo, commitMessage){
         context.log(issueComment);  
         
       }
+    } else {
+      context.log('Comment for fix: '+ title);
+        body =  config.errorNoIssueOpen.body + title;
+        title = config.errorNoIssueOpen.title;
+        const issueComment = await api.issues.create({
+          owner,
+          repo,
+          title,
+          body
+        });
     }
   }
 }
@@ -158,6 +169,7 @@ exports.handlePush = async function (robot, context) {
           if (fixInfo) {
             // Validate commit made the correct changes. 
             const {valid, currentFiles} = await validateCommit(context, files, fixInfo);
+            await checkIssuesEnable(context, owner, repo);
             if (valid) {
               context.log('Valid commit');
               await validCommit(context, fixInfo, currentFiles);

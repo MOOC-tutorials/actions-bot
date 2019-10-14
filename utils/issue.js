@@ -1,3 +1,13 @@
+const {getConfig} = require('../config/config');
+
+exports.checkIssuesEnable = async function(context, owner, repo){
+  const api = context.github;
+  await api.repos.update({
+    owner,
+    repo,
+    has_issues: true
+  });  
+}
 
 exports.conventionIssue = async function(context, commitMessage){
   const api = context.github;

@@ -12,6 +12,10 @@
         {"email":"somen@email.com",
          "name": "somen"}
     ],
+    "errorNoIssueOpen": {
+      "title": "El issue fue cerrado asociado al fix fue cerrado",
+      "body": "Al parecer el issue del fix asociado no esta abierto pero aun no se cumple con los elementos necesarios. Revise los issues cerrados y abra de nuevo aquel asociado a:"
+    },
     "errorConventionIssue":{
         "title": "Un commit que no sigue la convención de código o FIX a realizar",
         "body": "La convención de código a seguir :\n- Para los arreglos: `<FIX ID>: <Comentario>`\n- Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`\n\nIgualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las intrucciones a realizar para el siguiente."
