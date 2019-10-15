@@ -2,11 +2,13 @@ const {getConfig} = require('../config/config');
 
 exports.checkIssuesEnable = async function(context, owner, repo){
   const api = context.github;
-  await api.repos.update({
+  const repository = await api.repos.update({
     owner,
     repo,
     has_issues: true
-  });  
+  });
+  context.log(repository);
+  return repository;
 }
 
 exports.conventionIssue = async function(context, commitMessage){
@@ -16,19 +18,33 @@ exports.conventionIssue = async function(context, commitMessage){
   const repo = repository.name;
   const config = getConfig(repo);
 
-  let {title, body} = config.errorConventionIssue; 
-  body += '\nEl último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
-          + 'Este issue es solo un recordatorio de la convención de comentarios en los commits y puede ser cerrado.';
-  context.log('Convention Issue created');
-  const issueInfo = await api.issues.create({
-    owner,
-    repo,
-    title,
-    body,
-    assignees: [owner],
-    labels: ['documentation']
-  });
-  context.log(issueInfo);
+  let {title, body} = config.errorConventionIssue;
+  const {data} = await api.issues.listForRepo({owner, repo, state: 'open', labels:['documentation']});
+  context.log(data);
+  if(data.length > 0){
+    body = '@'+ owner + 'no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
+    const {number} = data[0]
+    const issueComment = await api.issues.createComment({
+          owner,
+          repo,
+          issue_number: number,
+          body
+    });
+    context.log('Convention Comment created - Issue: ' + number);
+  } else {
+    body += '\nEl último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
+         + 'Este issue es solo un recordatorio de la convención de comentarios en los commits y puede ser cerrado.';
+    const issueInfo = await api.issues.create({
+      owner,
+      repo,
+      title,
+      body,
+      assignees: [owner],
+      labels: ['documentation']
+    });
+    context.log('Convention Issue created');
+    //context.log(issueInfo);
+  }
 }
 
 exports.closeOpenIssues = async function(context){

@@ -15,6 +15,7 @@ exports.handleInstallation = async function(robot, context){
             const config = getConfig(repo);
             if (config && config.initialIssue){
                 await checkIssuesEnable(context, owner, repo);
+               // await checkIssuesEnable(context, 'gcortes-prof', repo);
                 const {title, body} = config.initialIssue;
                 const issueInfo = await api.issues.create({
                     owner, repo, title, body,

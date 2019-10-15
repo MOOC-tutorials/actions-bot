@@ -151,11 +151,12 @@ exports.handlePush = async function (robot, context) {
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
   const repo = repository.name;
-  const {has_issues} = repository; 
   const config = getConfig(repo);
 
   if(!context.isBot && VALID_REPOSITORIES.indexOf(repo) >= 0){
     let newIssueCreated = false;
+    const state = await checkIssuesEnable(context, owner, repo);
+    context.log('Check commits');
     commits.forEach(async function(commit){
           let commitMessage = commit.message.split(':')[0]
           const commitInfo = await api.repos.getCommit({
@@ -166,10 +167,10 @@ exports.handlePush = async function (robot, context) {
           const files = commitInfo.data.files;
           const {fixes, attempt} = config;
           const fixInfo = fixes.find(fix => fix.title === commitMessage);
+          context.log('Check commit:' + commitMessage);
           if (fixInfo) {
             // Validate commit made the correct changes. 
             const {valid, currentFiles} = await validateCommit(context, files, fixInfo);
-            await checkIssuesEnable(context, owner, repo);
             if (valid) {
               context.log('Valid commit');
               await validCommit(context, fixInfo, currentFiles);
@@ -197,7 +198,7 @@ exports.handlePush = async function (robot, context) {
               await invalidCommit(context, fixInfo, commit.message);
               if (attempt) await addAttempt(context, owner, repo, commitMessage);
             }
-          } else if(has_issues) {
+          } else {
             context.log('Incorrect convention');
             await conventionIssue(context, commitMessage);
             if (attempt) await addAttempt(context, owner, repo, "Incorrect convention");

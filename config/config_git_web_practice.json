@@ -13,8 +13,8 @@
          "name": "somen"}
     ],
     "errorNoIssueOpen": {
-      "title": "El issue fue cerrado asociado al fix fue cerrado",
-      "body": "Al parecer el issue del fix asociado no esta abierto pero aun no se cumple con los elementos necesarios. Revise los issues cerrados y abra de nuevo aquel asociado a:"
+      "title": "El issue asociado al fix fue cerrado",
+      "body": "Al parecer el issue del fix asociado no está abierto pero aun no se cumple con los elementos necesarios. Revise los issues cerrados y abra de nuevo aquel asociado a:"
     },
     "errorConventionIssue":{
         "title": "Un commit que no sigue la convención de código o FIX a realizar",
