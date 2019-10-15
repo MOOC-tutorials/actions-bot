@@ -3,6 +3,7 @@ const {getConfig, validators,
        modifiers, VALID_REPOSITORIES} = require('../config/config');
 const {closeOpenIssues, conventionIssue} = require('../utils/issue');
 const {addAttempt} = require('../utils/grade');
+const {checkIssuesEnable} = require('../utils/issue');
 
 function validateFileModifications(fileText, fixFileInfo){
   // Checks if was modified and if file is the expected one 
@@ -93,7 +94,7 @@ async function invalidCommit(context, fixInfo, commitMessage){
 
   //Add comment to issue about commit not fixing it.
   if(config.errorCommentIssue){
-    let {body} = config.errorCommentIssue;
+    let {body, labels} = config.errorCommentIssue;
     const {title, files} = fixInfo;
     const filesToObject = {...files};
     body += '\n`' + commitMessage + '`\n\n ```json\n' + JSON.stringify(filesToObject, null, '\t') + '\n```';
@@ -102,7 +103,7 @@ async function invalidCommit(context, fixInfo, commitMessage){
     const {data} = await api.issues.listForRepo({
       owner,
       repo,
-      labels: ['bug'],
+      labels,
       state: 'open',
       direction: 'asc'
     });
@@ -130,6 +131,16 @@ async function invalidCommit(context, fixInfo, commitMessage){
         context.log(issueComment);  
         
       }
+    } else {
+      context.log('Comment for fix: '+ title);
+        body =  config.errorNoIssueOpen.body + title;
+        title = config.errorNoIssueOpen.title;
+        const issueComment = await api.issues.create({
+          owner,
+          repo,
+          title,
+          body
+        });
     }
   }
 }
@@ -140,11 +151,12 @@ exports.handlePush = async function (robot, context) {
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
   const repo = repository.name;
-  const {has_issues} = repository; 
   const config = getConfig(repo);
 
   if(!context.isBot && VALID_REPOSITORIES.indexOf(repo) >= 0){
     let newIssueCreated = false;
+    const state = await checkIssuesEnable(context, owner, repo);
+    context.log('Check commits');
     commits.forEach(async function(commit){
           let commitMessage = commit.message.split(':')[0]
           const commitInfo = await api.repos.getCommit({
@@ -153,8 +165,9 @@ exports.handlePush = async function (robot, context) {
               ref
           });
           const files = commitInfo.data.files;
-          const fixes = config.fixes;
+          const {fixes, attempt} = config;
           const fixInfo = fixes.find(fix => fix.title === commitMessage);
+          context.log('Check commit:' + commitMessage);
           if (fixInfo) {
             // Validate commit made the correct changes. 
             const {valid, currentFiles} = await validateCommit(context, files, fixInfo);
@@ -166,9 +179,9 @@ exports.handlePush = async function (robot, context) {
               // Create new issue
               if(fixInfo.nextIssue && !newIssueCreated){
                 newIssueCreated = true;
-                await addAttempt(context, owner, repo, commitMessage);
+                if (attempt) await addAttempt(context, owner, repo, commitMessage);
 
-                const {title, body} = fixInfo.nextIssue;
+                const {title, body, labels} = fixInfo.nextIssue;
                 context.log(title + ' created');
                 await api.issues.create({
                   owner,
@@ -176,19 +189,19 @@ exports.handlePush = async function (robot, context) {
                   title,
                   body,
                   assignees: [owner],
-                  labels: ['bug']
+                  labels
                 });
                 
               }
             } else {
               context.log('Invalid commit');
               await invalidCommit(context, fixInfo, commit.message);
-              await addAttempt(context, owner, repo, commitMessage);
+              if (attempt) await addAttempt(context, owner, repo, commitMessage);
             }
-          } else if(has_issues) {
+          } else {
             context.log('Incorrect convention');
             await conventionIssue(context, commitMessage);
-            await addAttempt(context, owner, repo, 'Incorrect convention');
+            if (attempt) await addAttempt(context, owner, repo, "Incorrect convention");
           }
     });
   } else {

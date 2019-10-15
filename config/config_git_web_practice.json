@@ -1,4 +1,5 @@
 {
+    "traceAttempts": true,
     "users":[
         {"email":"disere@email.com",
          "name": "disere"},
@@ -11,17 +12,23 @@
         {"email":"somen@email.com",
          "name": "somen"}
     ],
+    "errorNoIssueOpen": {
+      "title": "El issue asociado al fix fue cerrado",
+      "body": "Al parecer el issue del fix asociado no está abierto pero aun no se cumple con los elementos necesarios. Revise los issues cerrados y abra de nuevo aquel asociado a:"
+    },
     "errorConventionIssue":{
         "title": "Un commit que no sigue la convención de código o FIX a realizar",
-        "body": "La convención de código a seguir :\n- Para los arreglos: `<FIX ID>: <Tu comentario>`\n- Para los arreglos con conflictos: `<FIX ID>: <Comentario> - MERGE`\n\nIgualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creara un issue con las intrucciones a realizar para el siguiente."
+        "body": "La convención de código a seguir :\n- Para los arreglos: `<FIX ID>: <Comentario>`\n- Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`\n\nIgualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las intrucciones a realizar para el siguiente."
     },
     "errorCommentIssue": {
+        "labels": ["bug"],
         "body": "Al parecer los cambios realizados no son los esperados. A continuación puedes encontrar más información al respecto:"
     },
     "errorInvalidIssueNumber":{
         "body": "Al parecer los cambios realizados se identificaron con el número de corrección incorrecto"
     },
     "initialIssue": {
+        "labels": ["bug"],
         "title": "ISSUE 1: Corrección de páginas 5 y 3",
         "body": "### FIX ID: FIX1 \n\n### Errores a corregir:\n- Pagina5.html.  La imagen y el título de la página no corresponden.\n- Pagina3.html.  El link del final de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En Pagina5.html, cambiar el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de la imagen por 'Mi quinta Página'.\n- En Pagina3.html, cambiar el link de la navegación y colocarle el nombre correcto ('Mi cuarta Página HTML')."},
         "fixes": [
@@ -81,6 +88,7 @@
                     
                 ],
                 "nextIssue": {
+                    "labels": ["bug"],
                     "title": "ISSUE 2: Corrección de páginas 1 y 4",
                     "body": "### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- Pagina1.html.  El link del final de la hoja debe ir a la página 2.\n- Pagina4.html.  El link del final de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En Pagina1.html,  cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda Página HTML').\n- En Pagina4.html, cambiar el link de la navegación y colocarle el nombre correcto ('Mi quinta Página HTML')."},
                     "actions": [{
@@ -255,6 +263,7 @@
                     }
                 ],
                 "nextIssue": {
+                    "labels": ["bug"],
                     "title": "ISSUE 3: Corrección de página 2",
                     "body": "### FIX ID: FIX3 \n\n### Errores a corregir:\n\n- Pagina2.html.  La imagen y el título de la página no son correctos.\n\n### Soluciones:\n\n- En Pagina2.html, cambiar el link de la imagen a BD2.gif y el texto del título que se encuentra debajo de la imagen por 'Mi segunda Página HTML'."}
                 },
@@ -395,9 +404,11 @@
                     }],
                 "nextIssue": {
                     "title": "Final del ejercicio",
+                    "labels": [],
                     "body": "**Los errores fueron corregidos**\n\n Elementos pendientes:\n\n - [ ] Hacer un **pull** para obtener los últimos cambios realizados por el equipo automático.\n\n- [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio."},
                 "actions": [
-                    { "type": "GRADE" },
+                    { "type": "GRADE",
+                      "files": [] },
                     {   "type": "DOM",
                         "files": [
                             {

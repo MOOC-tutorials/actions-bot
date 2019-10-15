@@ -18,7 +18,3 @@ exports.addAttempt = async function(context, owner, repo, title){
     const att = await attempt.save();
     context.log(att);
 };
-
-exports.grade = function(context){
-    //TODO: set grade
-};

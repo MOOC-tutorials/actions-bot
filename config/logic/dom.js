@@ -1,6 +1,6 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const { getCommitter } = require('../utils/committer');
+const { getCommitter } = require('../../utils/committer');
 
 exports.domValidation = function(htmlText, selector, value, attribute){
     const {document} = (new JSDOM(htmlText)).window;
