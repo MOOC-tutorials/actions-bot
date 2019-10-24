@@ -24,7 +24,7 @@ exports.conventionIssue = async function(context, commitMessage){
   if(data.length > 0){
     body = '@'+ owner + 'no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
     const {number} = data[0]
-    const issueComment = await api.issues.createComment({
+    await api.issues.createComment({
           owner,
           repo,
           issue_number: number,
@@ -34,7 +34,7 @@ exports.conventionIssue = async function(context, commitMessage){
   } else {
     body += '\nEl último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
          + 'Este issue es solo un recordatorio de la convención de comentarios en los commits y puede ser cerrado.';
-    const issueInfo = await api.issues.create({
+    await api.issues.create({
       owner,
       repo,
       title,
@@ -43,19 +43,14 @@ exports.conventionIssue = async function(context, commitMessage){
       labels: ['documentation']
     });
     context.log('Convention Issue created');
-    //context.log(issueInfo);
   }
 }
 
-exports.closeOpenIssues = async function(context){
+exports.closeOpenIssues = async function(context, owner, repo){
     const api = context.github;
-    const {repository} = context.payload;
-    // TODO: Refactor to use context.repo object
-    const owner = repository.owner.name;
-    const repo = repository.name;
- 
     const {data} = await api.issues.listForRepo({owner, repo, state: 'open'});
     context.log(data);
+
     if(data.length > 0){
      context.log('Close issues');
      data.forEach(async function(issue){
