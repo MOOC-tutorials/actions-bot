@@ -1,6 +1,6 @@
 const {checkIssuesEnable} = require('../utils/issue');
 
-exports.handleRepository = async function(robot, context){
+exports.handleRepository = async (robot, context) => {
   const api = context.github;
   const {action, repository} = context.payload;
   const owner = repository.owner.login;
