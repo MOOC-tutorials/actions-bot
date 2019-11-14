@@ -9,18 +9,17 @@
   "dependencies": {
     "probot": "^9.3.1",
     "jsdom": "^15.1.1",
-    "mongoose": "^5.7.4",
+    "mongoose": "^5.7.5",
     "js-yaml": "^3.13.1"
   },
   "engines": {
     "node": "8.1.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/join/a4a9f6b1-3ba7-4201-8097-cbc4f11eadb1"
+    "url": "https://github.com/mooc-tutorials/actions-bot"
   },
   "license": "MIT",
   "keywords": [
-    "node",
-    "server"
+    "probot"
   ]
 }

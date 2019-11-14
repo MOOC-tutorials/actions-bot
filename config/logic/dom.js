@@ -5,7 +5,8 @@ const { getCommitter } = require('../../utils/committer');
 exports.domValidation = function(htmlText, selector, value, attribute){
     const {document} = (new JSDOM(htmlText)).window;
     try{
-        let actualValue = document.querySelector(selector)[attribute];
+        let actualValue = document.querySelector(selector);
+        if(actualValue) actualValue = actualValue[attribute];
         console.log(actualValue);
         console.log(value);
         return value === actualValue;

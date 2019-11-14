@@ -3,9 +3,10 @@ const {getConfig, validators,
        modifiers, VALID_REPOSITORIES} = require('../config/config');
 const {checkIssuesEnable, closeOpenIssues, conventionIssue} = require('../utils/issue');
 const {addAttempt} = require('../utils/attempt');
-const {prettifyJson} = require('../utils/parse')
+const {prettifyJson} = require('../utils/parse');
+const {checkGrading} = require('../utils/grade');
 
-function validateFileModifications(fileText, fixFileInfo){
+const validateFileModifications = (fileText, fixFileInfo) => {
   // Checks if was modified and if file is the expected one 
   if(fixFileInfo){
     for (let index = 0; index < fixFileInfo.expectedValues.length; index++) {
@@ -25,7 +26,7 @@ function validateFileModifications(fileText, fixFileInfo){
   return false;
 }
 
-async function validateCommit(context, files, fixInfo){
+const validateCommit = async (context, files, fixInfo) => {
   //Validation is made taking into account the files changes by a commit. Each commit should do all the changes
   //required to be valid and only change the expected files
   //TODO: Check if it is the expected behavior
@@ -63,7 +64,7 @@ async function validateCommit(context, files, fixInfo){
   }
 }
 
-async function validCommit(context, fixInfo, currentFiles){
+const validCommit = async (context, fixInfo, currentFiles) =>{
   const api = context.github;
   const {repository} = context.payload;
   // TODO: Refactor to use context.repo object
@@ -86,7 +87,7 @@ async function validCommit(context, fixInfo, currentFiles){
   }
 }
 
-async function invalidCommit(context, fixInfo, commitMessage, rawFeedback){
+const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback) => {
   const api = context.github;
   const {repository} = context.payload;
   // TODO: Refactor to use context.repo object
@@ -148,7 +149,7 @@ async function invalidCommit(context, fixInfo, commitMessage, rawFeedback){
   }
 }
 
-exports.handlePush = async function (robot, context) {
+exports.handlePush = async (robot, context) => {
   const api = context.github;
   const {repository, commits, ref} = context.payload;
   const owner = repository.owner.name;
@@ -208,4 +209,4 @@ exports.handlePush = async function (robot, context) {
     context.log('Invalid repo or bot action');
     context.log(repo);
   }
-}
+};

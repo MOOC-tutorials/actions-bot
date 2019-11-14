@@ -2,7 +2,7 @@ const {getConfig} = require('../config/config');
 const {closeOpenIssues, checkIssuesEnable} = require('../utils/issue');
 const {checkGrading} = require('../utils/grade');
 
-exports.handleInstallation = async function(robot, context){
+exports.handleInstallation = async (robot, context) => {
     const api = context.github;
     const {action, installation} = context.payload;
     context.log(context.payload);

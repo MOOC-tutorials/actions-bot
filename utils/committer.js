@@ -1,6 +1,6 @@
 const {getConfig} = require('../config/config');
 
-exports.getCommitter = function (repoName) {
+exports.getCommitter = (repoName) => {
   const {users} = getConfig(repoName); 
   return users[Math.floor((Math.random()*users.length))];
 } 

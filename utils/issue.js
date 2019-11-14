@@ -1,6 +1,6 @@
 const {getConfig} = require('../config/config');
 
-exports.checkIssuesEnable = async function(context, owner, repo){
+exports.checkIssuesEnable = async (context, owner, repo) => {
   const api = context.github;
   const repository = await api.repos.update({
     owner,
@@ -11,7 +11,7 @@ exports.checkIssuesEnable = async function(context, owner, repo){
   return repository;
 }
 
-exports.conventionIssue = async function(context, commitMessage){
+exports.conventionIssue = async (context, commitMessage) => {
   const api = context.github;
   const {repository} = context.payload;
   const owner = repository.owner.name;
@@ -46,14 +46,14 @@ exports.conventionIssue = async function(context, commitMessage){
   }
 }
 
-exports.closeOpenIssues = async function(context, owner, repo){
+exports.closeOpenIssues = async (context, owner, repo) => {
     const api = context.github;
     const {data} = await api.issues.listForRepo({owner, repo, state: 'open'});
     context.log(data);
 
     if(data.length > 0){
      context.log('Close issues');
-     data.forEach(async function(issue){
+     data.forEach(async (issue) => {
          const { number } = issue;
          const issueInfo = await api.issues.update({
            owner,
