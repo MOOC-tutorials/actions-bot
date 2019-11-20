@@ -291,7 +291,7 @@ fixes:
 
        Elementos pendientes:
 
-       - [ ] Revisar y aceptar el **pull request** creado por los colaboradores para obtener los últimos cambios realizados por el equipo automático.
+       - [ ] Hacer un **pull** para obtener los últimos cambios realizados por el equipo automático.
 
       - [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio.
   actions:
