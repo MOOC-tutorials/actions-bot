@@ -16,6 +16,7 @@ PRIVATE_KEY_PATH=<path to .pem file for Githu Api authentication>
 DB_HOST=<MongoDB host>
 DB_USER=<MongoDB user>
 DB_PASS=<MongoDB password>
+DB_NAME=<MongoDB database>
 ```
 # Doc/Description (Spanish)
 
