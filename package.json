@@ -1,7 +1,7 @@
 {
   "name": "actions-bot",
   "version": "0.1.0",
-  "description": "A Github App for a static web project exercise",
+  "description": "A Github App for a static web project exercise.",
   "main": "server.js",
   "scripts": {
     "start": "probot run ./server.js"

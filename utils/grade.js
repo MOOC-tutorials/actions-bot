@@ -1,12 +1,3 @@
-const mongoose = require('mongoose')
-
-const mongoUri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/static-web-tutorial`
-
-mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-
 const Grade = require('../db/GradeSchema');
 
 exports.grading = async (owner, repo, gradeValue, context) => {
