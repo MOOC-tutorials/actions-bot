@@ -5,7 +5,7 @@ const {checkGrading} = require('../utils/grade');
 exports.handleInstallation = async (robot, context) => {
     const api = context.github;
     const {action, installation} = context.payload;
-    context.log(context.payload);
+    //context.log(context.payload);
     const repositories_added = context.payload.repositories_added || context.payload.repositories;
     context.log(action);
     if(action === 'added' || action === 'created'){

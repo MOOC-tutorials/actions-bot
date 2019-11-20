@@ -10,15 +10,28 @@ exports.VALID_REPOSITORIES = VALID_REPOSITORIES;
 exports.getConfig = function(repoName){
     if(VALID_REPOSITORIES.indexOf(repoName) >= 0){
       try{
-        const data = fs.readFileSync(__dirname + '/config_' + repoName + '.yml');
-        const config = yaml.safeLoad(data);
-        return config;
+        let file;
+        const fileYML = __dirname + '/config_' + repoName + '.yml';
+        const fileJSON = __dirname + '/config_' + repoName + '.json';
+        if(fs.existsSync(fileYML)) {
+          file = fileYML;
+        } else if(fs.existsSync(fileYML)) {
+          file = fileJSON;
+        } 
+        
+        if (file) {
+          console.log("Running with config file at: " + file);
+          const data = fs.readFileSync(file);
+          const config = yaml.safeLoad(data);
+          return config;
+        }
       } catch(err){
-        const data = fs.readFileSync(__dirname + '/config_' + repoName + '.json');
-        const config = JSON.parse(data);
-        return config;        
+        console.log(err);
+        return {};
       }
     }
+  console.log("No config file was found");
+  return {};
 };
 
 // Modifiers and validators by type

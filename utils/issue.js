@@ -7,7 +7,7 @@ exports.checkIssuesEnable = async (context, owner, repo) => {
     repo,
     has_issues: true
   });
-  context.log(repository);
+  //context.log(repository);
   return repository;
 }
 
@@ -20,7 +20,7 @@ exports.conventionIssue = async (context, commitMessage) => {
 
   let {title, body} = config.errorConventionIssue;
   const {data} = await api.issues.listForRepo({owner, repo, state: 'open', labels:['documentation']});
-  context.log(data);
+  //context.log(data);
   if(data.length > 0){
     body = '@'+ owner + 'no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
     const {number} = data[0]
@@ -60,7 +60,7 @@ exports.closeOpenIssues = async (context, owner, repo) => {
            repo, 
            issue_number: number,
            state: 'closed'});
-         context.log(issueInfo);
+         //context.log(issueInfo);
      });
     }
  }
