@@ -206,7 +206,7 @@ exports.handlePush = async (robot, context) => {
           }
     });
   } else {
-    context.log('Invalid repo or bot action');
+    context.log('Invalid repo, bot action or action done after grading');
     context.log(repo);
   }
 };

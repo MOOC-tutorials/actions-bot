@@ -92,30 +92,31 @@ fixes:
   actions:
   - type: DOM
     data:
-    - filename: html/pagina3.html
-      valueChanges:
-      - querySelector: "#titulo3"
-        attribute: textContent
-        value: Mi tercera página HTML
-      - querySelector: "#imagen3"
-        attribute: src
-        value: "../imagenes/BD3.gif"
-    - filename: html/pagina4.html
-      valueChanges:
-      - querySelector: "#titulo4"
-        attribute: textContent
-        value: Mi cuarta página HTML
-      - querySelector: "#imagen4"
-        attribute: src
-        value: "../imagenes/BD4.gif"
-    - filename: html/pagina5.html
-      valueChanges:
-      - querySelector: "#enlace5"
-        attribute: href
-        value: pagina1.html
-      - querySelector: "#enlace5"
-        attribute: textContent
-        value: Mi primera página HTML
+      files:
+      - filename: html/pagina3.html
+        valueChanges:
+        - querySelector: "#titulo3"
+          attribute: textContent
+          value: Mi tercera página HTML
+        - querySelector: "#imagen3"
+          attribute: src
+          value: "../imagenes/BD3.gif"
+      - filename: html/pagina4.html
+        valueChanges:
+        - querySelector: "#titulo4"
+          attribute: textContent
+          value: Mi cuarta página HTML
+        - querySelector: "#imagen4"
+          attribute: src
+          value: "../imagenes/BD4.gif"
+      - filename: html/pagina5.html
+        valueChanges:
+        - querySelector: "#enlace5"
+          attribute: href
+          value: pagina1.html
+        - querySelector: "#enlace5"
+          attribute: textContent
+          value: Mi primera página HTML
 - title: FIX2
   files:
   - filename: html/pagina1.html
@@ -306,11 +307,12 @@ fixes:
       totalPoints: -5
   - type: DOM
     data:
-    - filename: html/pagina2.html
-      valueChanges:
-      - querySelector: "#enlace2"
-        attribute: href
-        value: pagina3.html
-      - querySelector: "#enlace2"
-        attribute: textContent
-        value: Mi tercera página HTML
+      files:
+        - filename: html/pagina2.html
+          valueChanges:
+          - querySelector: "#enlace2"
+            attribute: href
+            value: pagina3.html
+          - querySelector: "#enlace2"
+            attribute: textContent
+            value: Mi tercera página HTML

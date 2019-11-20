@@ -2,6 +2,8 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { getCommitter } = require('../../utils/committer');
 
+const DEFAULT_BRANCH = 'master';
+
 exports.domValidation = function(htmlText, selector, value, attribute){
     const {document} = (new JSDOM(htmlText)).window;
     try{
@@ -44,14 +46,33 @@ function _fileDomModification(fileData, valueChanges, path){
     return {newDom, message};
 }
 
-exports.domModification = async function(files, context){
+exports.domModification = async function(data, context){
     const api = context.github;
-    const {repository} = context.payload;
+    const {files, pullRequest} = data;
+    const {repository, after: sha} = context.payload;
     const owner = repository.owner.name;
     const repo = repository.name;
 
-    files.forEach(async function(file){
-        const {filename, valueChanges} = file;
+    let branch = DEFAULT_BRANCH;
+    let pull = false;
+
+    if(pullRequest){
+        branch = pullRequest.pullHead;
+        pull = pullRequest.createPull;
+        await api.git.createRef({
+          owner,
+          repo,
+          ref: 'refs/heads/' + branch,
+          sha
+        }).catch(err => {
+          context.log(err);
+        });
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        const {filename, valueChanges, pullRequest=false} = file;
         const path = filename;
         const fileData = await api.repos.getContents({
             owner,
@@ -64,16 +85,33 @@ exports.domModification = async function(files, context){
         const newFileContent = buffer.toString('base64');
         const sha = fileData.data.sha;
 
-        context.log('Commit and push of the robot');
+        context.log('Commit and push of the robot to: ' + branch);
         const newCommit = await api.repos.createOrUpdateFile({
             owner,
             repo,
             sha,
             path,
+            branch,
             message,
             content: newFileContent,
             committer: getCommitter(repo)
         });
-        context.log(newCommit);    
-    });
+        context.log(newCommit);
+    }
+  
+    if(pull){
+      const {pullTitle: title, pullBody: body,
+             pullHead: head, pullBase: base} = pullRequest;
+
+      await api.pulls.create({
+        owner,
+        repo,
+        title,
+        body,
+        head,
+        base
+      }).catch(err => {
+        context.log(err);
+      });
+    }
 }
