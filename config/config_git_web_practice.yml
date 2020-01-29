@@ -37,6 +37,7 @@ errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el número de corrección
     incorrecto.
 initialIssue:
+  number: 1
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
@@ -80,6 +81,7 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
+    number: 2
     labels:
     - bug
     title: 'ISSUE 2: Corrección de páginas 1 y 4'
@@ -192,6 +194,7 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
+    number: 3
     labels:
     - bug
     title: 'ISSUE 3: Corrección de página 2'
@@ -284,6 +287,7 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
+    number: 4
     title: Final del ejercicio
     labels: []
     body: |-

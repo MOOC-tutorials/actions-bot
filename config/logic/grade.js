@@ -23,7 +23,7 @@ exports.exerciseGrade = async (data, context) => {
   context.log(gradeValue);
   const grade = await grading(owner, repo, gradeValue, context);
   context.log(grade);
-  const {issues} = await api.issues.listForRepo({owner, repo, state: 'open'});
+  const {data:{issues}} = await api.issues.listForRepo({owner, repo, state: 'open'});
   context.log(issues.length);
   if(issues.length > 0){
     const body = '@'+ owner + ' la calificación obtenida fue: `'+ gradeValue +'/'+ totalGrade +'`';

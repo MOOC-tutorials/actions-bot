@@ -168,10 +168,12 @@ exports.handlePush = async (robot, context) => {
   const grading = await checkGrading(owner, repo);
 
   if(!context.isBot && VALID_REPOSITORIES.indexOf(repo) >= 0 && !grading){
-    let newIssueCreated = false;
+    let newIssueCreated;
     await checkIssuesEnable(context, owner, repo);
     context.log('Check commits');
-    for(commit in commits){
+    context.log(commits);
+    for(let i = 0; i < commits.length; i++){
+          const commit = commits[i];
           let commitMessage = commit.message.split(':')[0]
           const commitInfo = await api.repos.getCommit({
               owner,
@@ -192,8 +194,9 @@ exports.handlePush = async (robot, context) => {
               //Close open issues
               await closeOpenIssues(context, owner, repo);
               // Create new issue
-              if(fixInfo.nextIssue && !newIssueCreated){
-                newIssueCreated = true;
+              const {number = 1} = newIssueCreated || {}
+              if(fixInfo.nextIssue !== newIssueCreated && fixInfo.nextIssue.number > number){
+                newIssueCreated = fixInfo.nextIssue;
                 const {title, body, labels} = fixInfo.nextIssue;
                 context.log(title + ' created');
                 await api.issues.create({
