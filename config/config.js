@@ -3,7 +3,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 
 // Valid repositories where the bot has actions to do
-const VALID_REPOSITORIES = ['git_web_practice'];
+const VALID_REPOSITORIES = ['git_web_practice', 'git_web_practice_branch'];
 exports.VALID_REPOSITORIES = VALID_REPOSITORIES;
 
 //Get the config of activities for the given repo
@@ -29,8 +29,10 @@ exports.getConfig = function(repoName){
         console.log(err);
         return {};
       }
+    }else {
+      console.log("Invalid repository name");
     }
-  console.log("No config file was found");
+  console.log("No config file was loaded");
   return {};
 };
 

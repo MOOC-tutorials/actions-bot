@@ -38,7 +38,7 @@ initialIssue:
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+  body: "### Identificador del error o acción: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
     y el título de la página no corresponden.\n- pagina3.html.  El link del final
     de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
     el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
@@ -84,8 +84,8 @@ fixes:
   nextIssue:
     labels:
     - bug
-    title: 'MERGE 1: Merge de correcciones de las páginas 3 y 5'
-    body: "### FIX ID: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama creada anteriormente 
+    title: 'ISSUE 2: Merge de correcciones de las páginas 3 y 5'
+    body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama creada anteriormente 
     (`fix_1`) con la rama de integración `master`"
   actions:
   - type: DOM
@@ -168,6 +168,7 @@ fixes:
           attribute: textContent
           value: Mi primera página HTML
 - title: MERGE1
+  files:
   - filename: html/pagina1.html
     ref: refs/heads/master
     expectedValues:
