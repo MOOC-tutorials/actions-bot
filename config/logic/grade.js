@@ -23,9 +23,9 @@ exports.exerciseGrade = async (data, context) => {
   context.log(gradeValue);
   const grade = await grading(owner, repo, gradeValue, context);
   context.log(grade);
-  const {data:{issues}} = await api.issues.listForRepo({owner, repo, state: 'open'});
-  context.log(issues.length);
-  if(issues.length > 0){
+  const {issues} = await api.issues.listForRepo({owner, repo, state: 'open'});
+  context.log(issues);
+  if(issues && issues.length > 0){
     const body = '@'+ owner + ' la calificación obtenida fue: `'+ gradeValue +'/'+ totalGrade +'`';
     const {number} = issues[0]
     await api.issues.createComment({
@@ -35,5 +35,15 @@ exports.exerciseGrade = async (data, context) => {
           body
     });
     context.log('Grade Comment created - Issue: ' + number);
-  } 
+  } else {
+    const body = '@'+ owner + ' la calificación obtenida fue: `'+ gradeValue +'/'+ totalGrade +'`';
+    const title = 'Calificación'
+    const {number} = await api.issues.create({
+          owner,
+          repo,title,
+          body,
+          assignees: [owner]
+        });
+    context.log('Grade Issue created - Issue: ' + number);
+  }
 };
