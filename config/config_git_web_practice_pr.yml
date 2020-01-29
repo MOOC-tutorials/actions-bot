@@ -37,7 +37,6 @@ errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el número de corrección
     incorrecto.
 initialIssue:
-  number: 1
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
@@ -81,11 +80,10 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
-    number: 2
     labels:
     - bug
     title: 'ISSUE 2: Corrección de páginas 1 y 4'
-    body: "### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- pagina1.html.  El link
+    body: "### Revisión PR 1:\n* Revisión de los cambios propuestos por el equipo automático\n\n### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- pagina1.html.  El link
       del final de la hoja debe ir a la página 2.\n- pagina4.html.  El link del final
       de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En `pagina1.html`,
       \ cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda
@@ -94,6 +92,12 @@ fixes:
   actions:
   - type: DOM
     data:
+      pullRequest:
+        pullTitle: Cambios posteriores al FIX 1
+        pullBody: Revisar los cambios y aceptarlos si son correctos
+        pullBase: master
+        pullHead: fix_1_1
+        createPull: true
       files:
       - filename: html/pagina3.html
         valueChanges:
@@ -194,7 +198,6 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
-    number: 3
     labels:
     - bug
     title: 'ISSUE 3: Corrección de página 2'
@@ -287,7 +290,6 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
-    number: 4
     title: Final del ejercicio
     labels: []
     body: |-
@@ -295,22 +297,18 @@ fixes:
 
        Elementos pendientes:
 
-       - [ ] Hacer un **pull** para obtener los últimos cambios realizados por el equipo automático.
+       - [ ] Revisar y aceptar el **pull request** creado por los colaboradores para obtener los últimos cambios realizados por el equipo automático.
 
       - [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio.
   actions:
-  - type: GRADE
-    data:
-    - title: FIX1
-      totalPoints: 30
-    - title: FIX2
-      totalPoints: 50
-    - title: FIX3
-      totalPoints: 20
-    - title: Incorrect convention
-      totalPoints: -5
   - type: DOM
     data:
+      pullRequest:
+        pullTitle: Cambios finales posteriores al FIX 3
+        pullBody: Revisa los cambios y aceptalos si son correctos
+        pullBase: master
+        pullHead: fix_3_1
+        createPull: true
       files:
         - filename: html/pagina2.html
           valueChanges:

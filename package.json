@@ -1,13 +1,13 @@
 {
   "name": "actions-bot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Github App for a static web project exercise.",
   "main": "server.js",
   "scripts": {
-    "start": "probot run ./server.js"
+    "start": "probot run ./index.js"
   },
   "dependencies": {
-    "probot": "^9.3.1",
+    "probot": "^9.9.1",
     "jsdom": "^15.1.1",
     "mongoose": "^5.7.5",
     "js-yaml": "^3.13.1"

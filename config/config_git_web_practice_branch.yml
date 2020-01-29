@@ -14,25 +14,22 @@ users:
 - email: somen@email.com
   name: somen
 errorNoIssueOpen:
-  title: El issue asociado al fix fue cerrado
+  title: El issue asociado al arreglo fue cerrado
   body: 'Al parecer el issue del fix asociado no está abierto, pero aún no se cumple
     con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel
     asociado a:'
 errorConventionIssue:
-  title: Un commit que no sigue la convención de código o FIX a realizar
+  title: Un commit que no sigue la convención de código o arreglo a realizar
   body: |-
-    La convención de código a seguir:
-    - Para los arreglos: `<FIX ID>: <Comentario>`
-    - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+    La convención de código a seguir: `<Identificador comentario>: <Comentario>`
 
-    Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
+    Igualmente, solo hay 1 arreglo a realizar. Al realizarlo cada paso y completarlo se creará un issue con las instrucciones a realizar para continuar.
     
-    Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
+    Para realizar la corrección del mensaje de commit usar `git commit --amend` y `git commit push -f`
 errorCommentIssue:
   labels:
   - bug
-  body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
-    encontrar más información al respecto:\n'
+  body: "Al parecer los cambios realizados no son los esperados. A continuación puedes encontrar más información al respecto: \n"
 errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el número de corrección
     incorrecto.
@@ -41,16 +38,18 @@ initialIssue:
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+  body: "### Identificador del error o acción: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
     y el título de la página no corresponden.\n- pagina3.html.  El link del final
     de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
     el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
     la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de la navegación
-    y colocarle el nombre correcto ('Mi cuarta página HTML')."
+    y colocarle el nombre correcto ('Mi cuarta página HTML').\n\n ### Condiciones:\n- Los cambios 
+    deben ser realizados en una nueva rama con el nombre `fix_1`"
 fixes:
 - title: FIX1
   files:
   - filename: html/pagina1.html
+    ref: refs/heads/fix_1
     expectedValues:
     - type: DOM
       querySelector: "#titulo1"
@@ -61,6 +60,7 @@ fixes:
       attribute: src
       value: "../imagenes/BD1.gif"
   - filename: html/pagina3.html
+    ref: refs/heads/fix_1
     expectedValues:
     - type: DOM
       querySelector: "#enlace3"
@@ -71,6 +71,7 @@ fixes:
       attribute: href
       value: pagina4.html
   - filename: html/pagina5.html
+    ref: refs/heads/fix_1
     expectedValues:
     - type: DOM
       querySelector: "#imagen5"
@@ -84,17 +85,47 @@ fixes:
     number: 2
     labels:
     - bug
-    title: 'ISSUE 2: Corrección de páginas 1 y 4'
-    body: "### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- pagina1.html.  El link
-      del final de la hoja debe ir a la página 2.\n- pagina4.html.  El link del final
-      de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En `pagina1.html`,
-      \ cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda
-      página HTML').\n- En `pagina4.html`, cambiar el link de la navegación y colocarle
-      el nombre correcto ('Mi quinta página HTML')."
+    title: 'ISSUE 2: Merge de correcciones de las páginas 3 y 5'
+    body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama creada anteriormente 
+    (`fix_1`) con la rama de integración `master`\n"
   actions:
   - type: DOM
     data:
+      pullRequest:
+        pullBase: master
+        pullHead: fix_total
+        createPull: false
+        mergePull: true
+        mergeMessage: Merge automático
       files:
+      - filename: html/pagina1.html
+        valueChanges:
+        - querySelector: "#titulo1"
+          attribute: textContent
+          value: Mi primera página HTML
+        - querySelector: "#imagen1"
+          attribute: src
+          value: "../imagenes/BD1.gif"
+        - querySelector: "#enlace1"
+          attribute: href
+          value: pagina2.html
+        - querySelector: "#enlace1"
+          attribute: textContent
+          value: Mi segunda página HTML
+      - filename: html/pagina2.html
+        valueChanges:
+        - querySelector: "#titulo2"
+          attribute: textContent
+          value: Mi segunda página HTML
+        - querySelector: "#imagen2"
+          attribute: src
+          value: "../imagenes/BD2.gif"
+        - querySelector: "#enlace2"
+          attribute: href
+          value: pagina3.html
+        - querySelector: "#enlace2"
+          attribute: textContent
+          value: Mi tercera página HTML
       - filename: html/pagina3.html
         valueChanges:
         - querySelector: "#titulo3"
@@ -103,6 +134,12 @@ fixes:
         - querySelector: "#imagen3"
           attribute: src
           value: "../imagenes/BD3.gif"
+        - querySelector: "#enlace3"
+          attribute: href
+          value: pagina4.html
+        - querySelector: "#enlace3"
+          attribute: textContent
+          value: Mi cuarta página HTML
       - filename: html/pagina4.html
         valueChanges:
         - querySelector: "#titulo4"
@@ -111,17 +148,30 @@ fixes:
         - querySelector: "#imagen4"
           attribute: src
           value: "../imagenes/BD4.gif"
+        - querySelector: "#enlace4"
+          attribute: href
+          value: pagina5.html
+        - querySelector: "#enlace4"
+          attribute: textContent
+          value: Mi quinta página HTML
       - filename: html/pagina5.html
         valueChanges:
+        - querySelector: "#titulo5"
+          attribute: textContent
+          value: Mi quinta página HTML
+        - querySelector: "#imagen5"
+          attribute: src
+          value: "../imagenes/BD5.gif"
         - querySelector: "#enlace5"
           attribute: href
           value: pagina1.html
         - querySelector: "#enlace5"
           attribute: textContent
           value: Mi primera página HTML
-- title: FIX2
+- title: MERGE1
   files:
   - filename: html/pagina1.html
+    ref: refs/heads/master
     expectedValues:
     - type: DOM
       querySelector: "#titulo1"
@@ -139,7 +189,27 @@ fixes:
       querySelector: "#enlace1"
       attribute: textContent
       value: Mi segunda página HTML
+  - filename: html/pagina2.html
+    ref: refs/heads/master
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo2"
+      attribute: textContent
+      value: Mi segunda página HTML
+    - type: DOM
+      querySelector: "#imagen2"
+      attribute: src
+      value: "../imagenes/BD2.gif"
+    - type: DOM
+      querySelector: "#enlace2"
+      attribute: textContent
+      value: Mi tercera página HTML
+    - type: DOM
+      querySelector: "#enlace2"
+      attribute: href
+      value: pagina3.html
   - filename: html/pagina3.html
+    ref: refs/heads/master
     expectedValues:
     - type: DOM
       querySelector: "#titulo3"
@@ -158,6 +228,7 @@ fixes:
       attribute: href
       value: pagina4.html
   - filename: html/pagina4.html
+    ref: refs/heads/master
     expectedValues:
     - type: DOM
       querySelector: "#titulo4"
@@ -176,6 +247,7 @@ fixes:
       attribute: href
       value: pagina5.html
   - filename: html/pagina5.html
+    ref: refs/heads/master
     expectedValues:
     - type: DOM
       querySelector: "#enlace5"
@@ -195,99 +267,6 @@ fixes:
       value: Mi quinta página HTML
   nextIssue:
     number: 3
-    labels:
-    - bug
-    title: 'ISSUE 3: Corrección de página 2'
-    body: "### FIX ID: FIX3 \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
-      y el título de la página no son correctos.\n\n### Soluciones:\n\n- En `pagina2.html`,
-      cambiar el link de la imagen a BD2.gif y el texto del título que se encuentra
-      debajo de la imagen por 'Mi segunda página HTML'."
-- title: FIX3
-  files:
-  - filename: html/pagina1.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo1"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen1"
-      attribute: src
-      value: "../imagenes/BD1.gif"
-    - type: DOM
-      querySelector: "#enlace1"
-      attribute: href
-      value: pagina2.html
-    - type: DOM
-      querySelector: "#enlace1"
-      attribute: textContent
-      value: Mi segunda página HTML
-  - filename: html/pagina2.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo2"
-      attribute: textContent
-      value: Mi segunda página HTML
-    - type: DOM
-      querySelector: "#imagen2"
-      attribute: src
-      value: "../imagenes/BD2.gif"
-  - filename: html/pagina3.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo3"
-      attribute: textContent
-      value: Mi tercera página HTML
-    - type: DOM
-      querySelector: "#imagen3"
-      attribute: src
-      value: "../imagenes/BD3.gif"
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: href
-      value: pagina4.html
-  - filename: html/pagina4.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo4"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#imagen4"
-      attribute: src
-      value: "../imagenes/BD4.gif"
-    - type: DOM
-      querySelector: "#enlace4"
-      attribute: textContent
-      value: Mi quinta página HTML
-    - type: DOM
-      querySelector: "#enlace4"
-      attribute: href
-      value: pagina5.html
-  - filename: html/pagina5.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: href
-      value: pagina1.html
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen5"
-      attribute: src
-      value: "../imagenes/BD5.gif"
-    - type: DOM
-      querySelector: "#titulo5"
-      attribute: textContent
-      value: Mi quinta página HTML
-  nextIssue:
-    number: 4
     title: Final del ejercicio
     labels: []
     body: |-
@@ -295,28 +274,15 @@ fixes:
 
        Elementos pendientes:
 
-       - [ ] Hacer un **pull** para obtener los últimos cambios realizados por el equipo automático.
+       - [ ] Revisar las ramas disponibles en el repositorio.
 
-      - [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio.
+       - [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio en las diferentes ramas.
   actions:
   - type: GRADE
     data:
     - title: FIX1
-      totalPoints: 30
-    - title: FIX2
       totalPoints: 50
-    - title: FIX3
-      totalPoints: 20
+    - title: MERGE1
+      totalPoints: 50
     - title: Incorrect convention
       totalPoints: -5
-  - type: DOM
-    data:
-      files:
-        - filename: html/pagina2.html
-          valueChanges:
-          - querySelector: "#enlace2"
-            attribute: href
-            value: pagina3.html
-          - querySelector: "#enlace2"
-            attribute: textContent
-            value: Mi tercera página HTML

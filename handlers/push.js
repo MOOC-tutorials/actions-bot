@@ -31,29 +31,39 @@ const validateCommit = async (context, files, fixInfo) => {
   //required to be valid and only change the expected files
   //TODO: Check if it is the expected behavior
   const api = context.github;
-  const {repository} = context.payload;
+  const {repository, ref} = context.payload;
   const owner = repository.owner.name;
   const repo = repository.name;
   try{
     let valid = true;
     let currentFiles = {};
     for (let index = 0; index < files.length; index++) {
-      const file = files[index];
-      const fileData = await api.repos.getContents({
-        owner,
-        repo,
-        path: file.filename
-      });
-      const fileText = new Buffer(fileData.data.content, 'base64').toString();
-      currentFiles[file.filename] = {content: fileText, sha: file.sha};
-      
-      context.log(file.filename);
-      context.log(fixInfo.files);
+      const file = files[index];   
       const fixFileInfo = fixInfo.files.find(fixfile => fixfile.filename === file.filename);
-      context.log(fixFileInfo);
-      const validChange = validateFileModifications(fileText, fixFileInfo);
-      if(!validChange){
-        valid = false;
+      
+      if (fixFileInfo){
+        const {ref : fixFileRef } = fixFileInfo;
+        context.log(fixFileInfo);
+        let validChange = (!fixFileRef || fixFileRef === ref) && fixFileInfo;
+        if (validChange){
+          const fileData = await api.repos.getContents({
+            owner,
+            repo,
+            path: file.filename,
+            ref
+          });
+          const fileText = new Buffer(fileData.data.content, 'base64').toString();
+          currentFiles[file.filename] = {content: fileText, sha: file.sha};
+          
+          context.log(file.filename);
+          context.log(fixInfo.files);
+          validChange = validateFileModifications(fileText, fixFileInfo);
+        }
+        if(!validChange){
+          // TODO: Review if a partial 'for' is better
+          valid = false;
+          break;
+        }
       }
     }
     context.log({valid, currentFiles});
@@ -158,10 +168,12 @@ exports.handlePush = async (robot, context) => {
   const grading = await checkGrading(owner, repo);
 
   if(!context.isBot && VALID_REPOSITORIES.indexOf(repo) >= 0 && !grading){
-    let newIssueCreated = false;
+    let newIssueCreated;
     await checkIssuesEnable(context, owner, repo);
     context.log('Check commits');
-    commits.forEach(async function(commit){
+    context.log(commits);
+    for(let i = 0; i < commits.length; i++){
+          const commit = commits[i];
           let commitMessage = commit.message.split(':')[0]
           const commitInfo = await api.repos.getCommit({
               owner,
@@ -182,8 +194,9 @@ exports.handlePush = async (robot, context) => {
               //Close open issues
               await closeOpenIssues(context, owner, repo);
               // Create new issue
-              if(fixInfo.nextIssue && !newIssueCreated){
-                newIssueCreated = true;
+              const {number = 1} = newIssueCreated || {}
+              if(fixInfo.nextIssue !== newIssueCreated && fixInfo.nextIssue.number > number){
+                newIssueCreated = fixInfo.nextIssue;
                 const {title, body, labels} = fixInfo.nextIssue;
                 context.log(title + ' created');
                 await api.issues.create({
@@ -204,7 +217,7 @@ exports.handlePush = async (robot, context) => {
             if (traceAttempts) await addAttempt(context, owner, repo, defaultAttemptTitle);
             await conventionIssue(context, commitMessage);
           }
-    });
+    }
   } else {
     context.log('Invalid repo, bot action or action done after grading');
     context.log(repo);

@@ -9,7 +9,7 @@ exports.addAttempt = async (context, owner, repo, title) => {
     const att = await attempt.save((err) => {
       if(err) context.log(err);
     });
-    context.log(att);
+    context.log("Attempt recorded");
 };
 
 exports.checkAttempts = async (title, owner, repo) => {
