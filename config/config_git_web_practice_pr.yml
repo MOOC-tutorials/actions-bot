@@ -1,0 +1,320 @@
+---
+traceAttempts: true
+defaultAttemptTitle: Incorrect convention
+rawFeedback: false
+users:
+- email: disere@email.com
+  name: disere
+- email: inds@email.com
+  name: inds
+- email: seands@email.com
+  name: seands
+- email: erracep@email.com
+  name: erracep
+- email: somen@email.com
+  name: somen
+errorNoIssueOpen:
+  title: El issue asociado al fix fue cerrado
+  body: 'Al parecer el issue del fix asociado no está abierto, pero aún no se cumple
+    con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel
+    asociado a:'
+errorConventionIssue:
+  title: Un commit que no sigue la convención de código o FIX a realizar
+  body: |-
+    La convención de código a seguir:
+    - Para los arreglos: `<FIX ID>: <Comentario>`
+    - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+
+    Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
+    
+    Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
+errorCommentIssue:
+  labels:
+  - bug
+  body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
+    encontrar más información al respecto:\n'
+errorInvalidIssueNumber:
+  body: Al parecer los cambios realizados se identificaron con el número de corrección
+    incorrecto.
+initialIssue:
+  labels:
+  - bug
+  title: 'ISSUE 1: Corrección de páginas 5 y 3'
+  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+    y el título de la página no corresponden.\n- pagina3.html.  El link del final
+    de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
+    el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
+    la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de la navegación
+    y colocarle el nombre correcto ('Mi cuarta página HTML')."
+fixes:
+- title: FIX1
+  files:
+  - filename: html/pagina1.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo1"
+      attribute: textContent
+      value: Mi primera página HTML
+    - type: DOM
+      querySelector: "#imagen1"
+      attribute: src
+      value: "../imagenes/BD1.gif"
+  - filename: html/pagina3.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#enlace3"
+      attribute: textContent
+      value: Mi cuarta página HTML
+    - type: DOM
+      querySelector: "#enlace3"
+      attribute: href
+      value: pagina4.html
+  - filename: html/pagina5.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#imagen5"
+      attribute: src
+      value: "../imagenes/BD5.gif"
+    - type: DOM
+      querySelector: "#titulo5"
+      attribute: textContent
+      value: Mi quinta página HTML
+  nextIssue:
+    labels:
+    - bug
+    title: 'ISSUE 2: Corrección de páginas 1 y 4'
+    body: "### Revisión PR 1:\n* Revisión de los cambios propuestos por el equipo automático\n\n### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- pagina1.html.  El link
+      del final de la hoja debe ir a la página 2.\n- pagina4.html.  El link del final
+      de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En `pagina1.html`,
+      \ cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda
+      página HTML').\n- En `pagina4.html`, cambiar el link de la navegación y colocarle
+      el nombre correcto ('Mi quinta página HTML')."
+  actions:
+  - type: DOM
+    data:
+      pullRequest:
+        pullTitle: Cambios posteriores al FIX 1
+        pullBody: Revisar los cambios y aceptarlos si son correctos
+        pullBase: master
+        pullHead: fix_1_1
+        createPull: true
+      files:
+      - filename: html/pagina3.html
+        valueChanges:
+        - querySelector: "#titulo3"
+          attribute: textContent
+          value: Mi tercera página HTML
+        - querySelector: "#imagen3"
+          attribute: src
+          value: "../imagenes/BD3.gif"
+      - filename: html/pagina4.html
+        valueChanges:
+        - querySelector: "#titulo4"
+          attribute: textContent
+          value: Mi cuarta página HTML
+        - querySelector: "#imagen4"
+          attribute: src
+          value: "../imagenes/BD4.gif"
+      - filename: html/pagina5.html
+        valueChanges:
+        - querySelector: "#enlace5"
+          attribute: href
+          value: pagina1.html
+        - querySelector: "#enlace5"
+          attribute: textContent
+          value: Mi primera página HTML
+- title: FIX2
+  files:
+  - filename: html/pagina1.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo1"
+      attribute: textContent
+      value: Mi primera página HTML
+    - type: DOM
+      querySelector: "#imagen1"
+      attribute: src
+      value: "../imagenes/BD1.gif"
+    - type: DOM
+      querySelector: "#enlace1"
+      attribute: href
+      value: pagina2.html
+    - type: DOM
+      querySelector: "#enlace1"
+      attribute: textContent
+      value: Mi segunda página HTML
+  - filename: html/pagina3.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo3"
+      attribute: textContent
+      value: Mi tercera página HTML
+    - type: DOM
+      querySelector: "#imagen3"
+      attribute: src
+      value: "../imagenes/BD3.gif"
+    - type: DOM
+      querySelector: "#enlace3"
+      attribute: textContent
+      value: Mi cuarta página HTML
+    - type: DOM
+      querySelector: "#enlace3"
+      attribute: href
+      value: pagina4.html
+  - filename: html/pagina4.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo4"
+      attribute: textContent
+      value: Mi cuarta página HTML
+    - type: DOM
+      querySelector: "#imagen4"
+      attribute: src
+      value: "../imagenes/BD4.gif"
+    - type: DOM
+      querySelector: "#enlace4"
+      attribute: textContent
+      value: Mi quinta página HTML
+    - type: DOM
+      querySelector: "#enlace4"
+      attribute: href
+      value: pagina5.html
+  - filename: html/pagina5.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#enlace5"
+      attribute: href
+      value: pagina1.html
+    - type: DOM
+      querySelector: "#enlace5"
+      attribute: textContent
+      value: Mi primera página HTML
+    - type: DOM
+      querySelector: "#imagen5"
+      attribute: src
+      value: "../imagenes/BD5.gif"
+    - type: DOM
+      querySelector: "#titulo5"
+      attribute: textContent
+      value: Mi quinta página HTML
+  nextIssue:
+    labels:
+    - bug
+    title: 'ISSUE 3: Corrección de página 2'
+    body: "### FIX ID: FIX3 \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
+      y el título de la página no son correctos.\n\n### Soluciones:\n\n- En `pagina2.html`,
+      cambiar el link de la imagen a BD2.gif y el texto del título que se encuentra
+      debajo de la imagen por 'Mi segunda página HTML'."
+- title: FIX3
+  files:
+  - filename: html/pagina1.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo1"
+      attribute: textContent
+      value: Mi primera página HTML
+    - type: DOM
+      querySelector: "#imagen1"
+      attribute: src
+      value: "../imagenes/BD1.gif"
+    - type: DOM
+      querySelector: "#enlace1"
+      attribute: href
+      value: pagina2.html
+    - type: DOM
+      querySelector: "#enlace1"
+      attribute: textContent
+      value: Mi segunda página HTML
+  - filename: html/pagina2.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo2"
+      attribute: textContent
+      value: Mi segunda página HTML
+    - type: DOM
+      querySelector: "#imagen2"
+      attribute: src
+      value: "../imagenes/BD2.gif"
+  - filename: html/pagina3.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo3"
+      attribute: textContent
+      value: Mi tercera página HTML
+    - type: DOM
+      querySelector: "#imagen3"
+      attribute: src
+      value: "../imagenes/BD3.gif"
+    - type: DOM
+      querySelector: "#enlace3"
+      attribute: textContent
+      value: Mi cuarta página HTML
+    - type: DOM
+      querySelector: "#enlace3"
+      attribute: href
+      value: pagina4.html
+  - filename: html/pagina4.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo4"
+      attribute: textContent
+      value: Mi cuarta página HTML
+    - type: DOM
+      querySelector: "#imagen4"
+      attribute: src
+      value: "../imagenes/BD4.gif"
+    - type: DOM
+      querySelector: "#enlace4"
+      attribute: textContent
+      value: Mi quinta página HTML
+    - type: DOM
+      querySelector: "#enlace4"
+      attribute: href
+      value: pagina5.html
+  - filename: html/pagina5.html
+    expectedValues:
+    - type: DOM
+      querySelector: "#enlace5"
+      attribute: href
+      value: pagina1.html
+    - type: DOM
+      querySelector: "#enlace5"
+      attribute: textContent
+      value: Mi primera página HTML
+    - type: DOM
+      querySelector: "#imagen5"
+      attribute: src
+      value: "../imagenes/BD5.gif"
+    - type: DOM
+      querySelector: "#titulo5"
+      attribute: textContent
+      value: Mi quinta página HTML
+  nextIssue:
+    title: Final del ejercicio
+    labels: []
+    body: |-
+      **Los errores fueron corregidos.**
+
+       Elementos pendientes:
+
+       - [ ] Revisar y aceptar el **pull request** creado por los colaboradores para obtener los últimos cambios realizados por el equipo automático.
+
+      - [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio.
+  actions:
+  - type: DOM
+    data:
+      pullRequest:
+        pullTitle: Cambios finales posteriores al FIX 3
+        pullBody: Revisa los cambios y aceptalos si son correctos
+        pullBase: master
+        pullHead: fix_3_1
+        createPull: true
+      files:
+        - filename: html/pagina2.html
+          valueChanges:
+          - querySelector: "#enlace2"
+            attribute: href
+            value: pagina3.html
+          - querySelector: "#enlace2"
+            attribute: textContent
+            value: Mi tercera página HTML

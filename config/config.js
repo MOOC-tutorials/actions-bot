@@ -15,7 +15,7 @@ exports.getConfig = function(repoName){
         const fileJSON = __dirname + '/config_' + repoName + '.json';
         if(fs.existsSync(fileYML)) {
           file = fileYML;
-        } else if(fs.existsSync(fileYML)) {
+        } else if(fs.existsSync(fileJSON)) {
           file = fileJSON;
         } 
         

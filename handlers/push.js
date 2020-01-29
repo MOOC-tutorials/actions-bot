@@ -31,29 +31,39 @@ const validateCommit = async (context, files, fixInfo) => {
   //required to be valid and only change the expected files
   //TODO: Check if it is the expected behavior
   const api = context.github;
-  const {repository} = context.payload;
+  const {repository, ref} = context.payload;
   const owner = repository.owner.name;
   const repo = repository.name;
   try{
     let valid = true;
     let currentFiles = {};
     for (let index = 0; index < files.length; index++) {
-      const file = files[index];
-      const fileData = await api.repos.getContents({
-        owner,
-        repo,
-        path: file.filename
-      });
-      const fileText = new Buffer(fileData.data.content, 'base64').toString();
-      currentFiles[file.filename] = {content: fileText, sha: file.sha};
-      
-      context.log(file.filename);
-      context.log(fixInfo.files);
+      const file = files[index];   
       const fixFileInfo = fixInfo.files.find(fixfile => fixfile.filename === file.filename);
-      context.log(fixFileInfo);
-      const validChange = validateFileModifications(fileText, fixFileInfo);
-      if(!validChange){
-        valid = false;
+      
+      if (fixFileInfo){
+        const {ref : fixFileRef } = fixFileInfo;
+        context.log(fixFileInfo);
+        let validChange = (!fixFileRef || fixFileRef === ref) && fixFileInfo;
+        if (validChange){
+          const fileData = await api.repos.getContents({
+            owner,
+            repo,
+            path: file.filename,
+            ref
+          });
+          const fileText = new Buffer(fileData.data.content, 'base64').toString();
+          currentFiles[file.filename] = {content: fileText, sha: file.sha};
+          
+          context.log(file.filename);
+          context.log(fixInfo.files);
+          validChange = validateFileModifications(fileText, fixFileInfo);
+        }
+        if(!validChange){
+          // TODO: Review if a partial 'for' is better
+          valid = false;
+          break;
+        }
       }
     }
     context.log({valid, currentFiles});
