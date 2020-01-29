@@ -4,7 +4,7 @@
   "description": "A Github App for a static web project exercise.",
   "main": "server.js",
   "scripts": {
-    "start": "probot run ./server.js"
+    "start": "probot run ./index.js"
   },
   "dependencies": {
     "probot": "^9.9.1",

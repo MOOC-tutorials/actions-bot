@@ -29,8 +29,7 @@ errorConventionIssue:
 errorCommentIssue:
   labels:
   - bug
-  body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
-    encontrar más información al respecto:\n'
+  body: "Al parecer los cambios realizados no son los esperados. A continuación puedes encontrar más información al respecto: \n"
 errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el número de corrección
     incorrecto.
@@ -86,7 +85,8 @@ fixes:
     - bug
     title: 'ISSUE 2: Merge de correcciones de las páginas 3 y 5'
     body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama creada anteriormente 
-    (`fix_1`) con la rama de integración `master`"
+    (`fix_1`) con la rama de integración `master`\n\n ### Condiciones:\n\n- Antes de hacer el merge asegurese de tener la última versión 
+    de la rama master en su repositorio corriendo `git checkout master` y `git pull`"
   actions:
   - type: DOM
     data:

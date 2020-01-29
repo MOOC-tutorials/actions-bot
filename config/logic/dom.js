@@ -59,6 +59,15 @@ exports.domModification = async function(data, context){
     let merge = false;
 
     if(pullRequest){
+        const {data:{object: {sha}}} = await api.git.getRef({
+          owner,
+          repo,
+          ref: 'heads/' + pullRequest.pullBase 
+        }).catch(err => {
+          context.log(err);
+        });
+        console.log("Base ref: ");
+        console.log(data);
         branch = pullRequest.pullHead;
         pull = pullRequest.createPull;
         merge = pullRequest.mergePull;

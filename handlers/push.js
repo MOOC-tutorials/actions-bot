@@ -171,7 +171,7 @@ exports.handlePush = async (robot, context) => {
     let newIssueCreated = false;
     await checkIssuesEnable(context, owner, repo);
     context.log('Check commits');
-    commits.forEach(async function(commit){
+    for(commit in commits){
           let commitMessage = commit.message.split(':')[0]
           const commitInfo = await api.repos.getCommit({
               owner,
@@ -214,7 +214,7 @@ exports.handlePush = async (robot, context) => {
             if (traceAttempts) await addAttempt(context, owner, repo, defaultAttemptTitle);
             await conventionIssue(context, commitMessage);
           }
-    });
+    }
   } else {
     context.log('Invalid repo, bot action or action done after grading');
     context.log(repo);
