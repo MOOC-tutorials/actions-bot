@@ -36,7 +36,7 @@ const validateCommit = async (context, files, fixInfo) => {
   const repo = repository.name;
   try{
     let valid = true;
-    let currentFiles = {};
+    let currentFiles = [];
     for (let index = 0; index < files.length; index++) {
       const file = files[index];   
       const fixFileInfo = fixInfo.files.find(fixfile => fixfile.filename === file.filename);
@@ -53,7 +53,6 @@ const validateCommit = async (context, files, fixInfo) => {
             ref
           });
           const fileText = new Buffer(fileData.data.content, 'base64').toString();
-          currentFiles[file.filename] = {content: fileText, sha: file.sha};
           
           context.log(file.filename);
           context.log(fixInfo.files);
@@ -62,6 +61,7 @@ const validateCommit = async (context, files, fixInfo) => {
         if(!validChange){
           // TODO: Review if a partial 'for' is better
           valid = false;
+          currentFiles.push(fixFileInfo);
           break;
         }
       }
@@ -69,8 +69,10 @@ const validateCommit = async (context, files, fixInfo) => {
     context.log({valid, currentFiles});
     return {valid, currentFiles};
   } catch(err){
-    console.error(err)
-    return false;
+    context.error(err)
+    const valid = false;
+    const currentFiles = [];
+    return {valid, currentFiles};
   }
 }
 
@@ -97,9 +99,10 @@ const validCommit = async (context, fixInfo, currentFiles) =>{
   }
 }
 
-const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback) => {
+const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, currentFiles) => {
   const api = context.github;
   const {repository} = context.payload;
+
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
   const repo = repository.name;
@@ -109,7 +112,10 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback) => {
   if(config.errorCommentIssue){
     let {body, labels} = config.errorCommentIssue;
     const {title, files} = fixInfo;
-    const filesToObject = {...files};
+    if(!currentFiles){
+      currentFiles = files;
+    }
+    const filesToObject = {...currentFiles};
     const expectedChanges = prettifyJson(filesToObject, rawFeedback);
     body += '\n`' + commitMessage + '`\n\n' + expectedChanges;
     context.log(owner);
@@ -210,7 +216,7 @@ exports.handlePush = async (robot, context) => {
               }
             } else {
               context.log('Invalid commit');
-              await invalidCommit(context, fixInfo, commit.message, rawFeedback);
+              await invalidCommit(context, fixInfo, commit.message, rawFeedback, currentFiles);
             }
           } else {
             context.log('Incorrect convention');
