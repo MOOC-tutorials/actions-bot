@@ -1,5 +1,6 @@
 
 const fs = require('fs');
+const path = require('path');
 const yaml = require('js-yaml');
 
 // Valid repositories where the bot has actions to do
@@ -8,6 +9,7 @@ exports.VALID_REPOSITORIES = VALID_REPOSITORIES;
 
 //Get the config of activities for the given repo
 exports.getConfig = function(repoName){
+  
     if(VALID_REPOSITORIES.indexOf(repoName) >= 0){
       try{
         let file;
@@ -29,8 +31,24 @@ exports.getConfig = function(repoName){
         console.log(err);
         return {};
       }
-    }else {
-      console.log("Invalid repository name");
+    } else {
+      console.log("Invalid repository name or testing case");
+      const possibleConfigFiles = fs.readdirSync(__dirname);
+
+      let configFile;      
+      possibleConfigFiles.forEach( file => {
+        const filename = path.basename(file).split('.')[0];
+        if(repoName.includes(filename)){
+          configFile = __dirname + '/' + file;
+        }
+      });
+
+      if(configFile){
+        console.log("Running with config file at: " + configFile);
+          const data = fs.readFileSync(configFile);
+          const config = yaml.safeLoad(data);
+          return config;
+      }
     }
   console.log("No config file was loaded");
   return {};

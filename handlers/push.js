@@ -173,7 +173,7 @@ exports.handlePush = async (robot, context) => {
   const config = getConfig(repo);
   const grading = await checkGrading(owner, repo);
 
-  if(!context.isBot && VALID_REPOSITORIES.indexOf(repo) >= 0 && !grading){
+  if(!context.isBot && config && (!grading || config.multipleAttempts)){
     let newIssueCreated;
     await checkIssuesEnable(context, owner, repo);
     context.log('Check commits');
@@ -225,7 +225,7 @@ exports.handlePush = async (robot, context) => {
           }
     }
   } else {
-    context.log('Invalid repo, bot action or action done after grading');
+    context.log('Invalid repo, bot action or action done after grading without multiple attempts on');
     context.log(repo);
   }
 };

@@ -1,0 +1,75 @@
+---
+traceAttempts: true
+multipleAttempts: true
+defaultAttemptTitle: Incorrect convention
+rawFeedback: false
+users:
+- email: disere@email.com
+  name: disere
+- email: inds@email.com
+  name: inds
+- email: seands@email.com
+  name: seands
+- email: erracep@email.com
+  name: erracep
+- email: somen@email.com
+  name: somen
+errorNoIssueOpen:
+  title: El issue asociado al fix fue cerrado
+  body: 'Al parecer el issue del fix asociado no está abierto, pero aún no se cumple
+    con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel
+    asociado a:'
+errorConventionIssue:
+  title: Un commit que no sigue la convención de código o FIX a realizar
+  body: |-
+    La convención de código a seguir:
+    - Para los arreglos: `<FIX ID>: <Comentario>`
+    - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+
+    Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
+    
+    Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
+errorCommentIssue:
+  labels:
+  - bug
+  body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
+    encontrar más información al respecto:\n'
+errorInvalidIssueNumber:
+  body: Al parecer los cambios realizados se identificaron con el número de corrección
+    incorrecto.
+initialIssue:
+  number: 1
+  labels:
+  - bug
+  title: 'ISSUE 1: Corrección página 5'
+  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+    y el título de la página no corresponden.\n\n### Soluciones:\n - En `pagina5.html`, cambiar
+    el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
+    la imagen por 'Mi quinta página HTML'.\n"
+fixes:
+- title: FIX1
+  files:
+  - filename: html/pagina5.html
+    ref: refs/heads/fix_1
+    expectedValues:
+    - type: DOM
+      querySelector: "#imagen5"
+      attribute: src
+      value: "../imagenes/BD5.gif"
+    - type: DOM
+      querySelector: "#titulo5"
+      attribute: textContent
+      value: Mi quinta página HTML
+  nextIssue:
+    number: 2
+    labels:
+    - bug
+    title: 'FIN de las correcciones'
+    body: "Prueba de correcciones finalizada"
+  actions:
+  - type: GRADE
+    data:
+    - title: FIX1
+      totalPoints: 100
+    - title: Incorrect convention
+      totalPoints: -5

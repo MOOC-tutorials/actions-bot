@@ -13,7 +13,7 @@
     "js-yaml": "^3.13.1"
   },
   "engines": {
-    "node": "8.1.x"
+    "node": "10.1.x"
   },
   "repository": {
     "url": "https://github.com/mooc-tutorials/actions-bot"

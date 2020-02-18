@@ -1,7 +1,7 @@
 const {handlePush} = require('./handlers/push');
 const {handleInstallation} = require('./handlers/installation');
 const {handleRepository} = require('./handlers/repository');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const mongoUri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
 
