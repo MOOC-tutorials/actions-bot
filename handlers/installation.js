@@ -17,7 +17,7 @@ exports.handleInstallation = async (robot, context) => {
             const config = getConfig(repo);
             await checkIssuesEnable(context, owner, repo);
             const grading = await checkGrading(owner, repo);
-            if (config && config.initialIssue && !grading){
+            if (config && config.initialIssue && (!grading || config.multipleAttempts)){
                 const {title, body} = config.initialIssue;
                 // Review duplicated issue and close them if any
                 await closeOpenIssues(context, owner, repo);
