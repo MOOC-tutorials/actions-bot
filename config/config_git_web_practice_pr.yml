@@ -14,18 +14,18 @@ users:
 - email: somen@email.com
   name: somen
 errorNoIssueOpen:
-  title: El issue asociado al fix fue cerrado
-  body: 'Al parecer el issue del fix asociado no está abierto, pero aún no se cumple
+  title: El issue asociado a la corrección fue cerrado
+  body: 'Al parecer el issue de la corrección asociada no está abierto, pero aún no se cumple
     con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel
     asociado a:'
 errorConventionIssue:
-  title: Un commit que no sigue la convención de código o FIX a realizar
+  title: Un commit que no sigue la convención de código o identificación de corrección a realizar
   body: |-
     La convención de código a seguir:
-    - Para los arreglos: `<FIX ID>: <Comentario>`
-    - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+    - Para los arreglos: `<Identificación de corrección>: <Comentario>`
+    - Para los arreglos con conflictos: `<Identificación de corrección>: <Comentario por defecto del merge>`
 
-    Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
+    Igualmente, solo hay 3 correcciones a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente (para su identificación, recuerde que el comentario del commit debe usar la `Identificación de corrección` que se menciona en el issue respectivo a cada corrección).
     
     Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
 errorCommentIssue:
@@ -37,10 +37,11 @@ errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el número de corrección
     incorrecto.
 initialIssue:
+  number: 1
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+  body: "### Identificación de la corrección: `FIX1` \n\n### Errores a corregir:\n- pagina5.html.  La imagen
     y el título de la página no corresponden.\n- pagina3.html.  El link del final
     de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
     el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
@@ -80,10 +81,11 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
+    number: 2
     labels:
     - bug
     title: 'ISSUE 2: Corrección de páginas 1 y 4'
-    body: "### Revisión PR 1:\n* Revisión de los cambios propuestos por el equipo automático\n\n### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- pagina1.html.  El link
+    body: "### Revisión PR 1:\n* Revisión de los cambios propuestos por el equipo automático\n\n### Identificación de la corrección:  `FIX2` \n\n### Errores a corregir:\n\n- pagina1.html.  El link
       del final de la hoja debe ir a la página 2.\n- pagina4.html.  El link del final
       de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En `pagina1.html`,
       \ cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda
@@ -198,10 +200,11 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
+    number: 3
     labels:
     - bug
     title: 'ISSUE 3: Corrección de página 2'
-    body: "### FIX ID: FIX3 \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
+    body: "### Identificación de la corrección: `FIX3` \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
       y el título de la página no son correctos.\n\n### Soluciones:\n\n- En `pagina2.html`,
       cambiar el link de la imagen a BD2.gif y el texto del título que se encuentra
       debajo de la imagen por 'Mi segunda página HTML'."
@@ -290,6 +293,7 @@ fixes:
       attribute: textContent
       value: Mi quinta página HTML
   nextIssue:
+    number: 4
     title: Final del ejercicio
     labels: []
     body: |-

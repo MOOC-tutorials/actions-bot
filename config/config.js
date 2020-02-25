@@ -4,7 +4,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 // Valid repositories where the bot has actions to do
-const VALID_REPOSITORIES = ['git_web_practice', 'git_web_practice_branch'];
+const VALID_REPOSITORIES = ['git_web_practice', 'git_web_practice_branch', 'git_web_practice_pr'];
 exports.VALID_REPOSITORIES = VALID_REPOSITORIES;
 
 //Get the config of activities for the given repo

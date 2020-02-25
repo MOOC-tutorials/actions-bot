@@ -1,0 +1,4 @@
+# Ignore directories and files 
+.data/
+.env
+node_modules/

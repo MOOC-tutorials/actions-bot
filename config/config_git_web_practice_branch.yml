@@ -7,18 +7,18 @@ errorCommentIssue:
 errorConventionIssue: 
   body: |-
       La convención de código a seguir:
-      - Para los arreglos: `<FIX ID>: <Comentario>`
-      - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+      - Para los arreglos: `<Identificación de la corrección>: <Comentario>`
+      - Para los arreglos con conflictos: `<Identificación de la corrección>: <Comentario por defecto del merge>`
       
-      Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
+      Igualmente, solo hay 1 corrección a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
       
       Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
-  title: "Un commit que no sigue la convención de código o FIX a realizar"
+  title: "Un commit que no sigue la convención de código o identificación de corrección a realizar"
 errorInvalidIssueNumber: 
-  body: "Al parecer los cambios realizados se identificaron con el número de corrección incorrecto."
+  body: "Al parecer los cambios realizados se identificaron con el identificador de corrección incorrecto."
 errorNoIssueOpen: 
-  body: "Al parecer el issue del fix asociado no está abierto, pero aún no se cumple con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel asociado a:"
-  title: "El issue asociado al fix fue cerrado"
+  body: "Al parecer el issue de la corrección asociada no está abierto, y aún no se cumple con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel asociado a:"
+  title: "El issue asociado a la identificación de corrección suministrada fue cerrado"
 fixes: 
   - 
     actions: 
@@ -55,7 +55,7 @@ fixes:
     title: FIX1
 initialIssue: 
   body: |
-      ### FIX ID: FIX1 
+      ### Identificación de la corrección: `FIX1` 
       
       ### Errores a corregir:
       - pagina5.html.  La imagen y el título de la página no corresponden.
@@ -65,7 +65,7 @@ initialIssue:
   labels: 
     - bug
   number: 1
-  title: "ISSUE 1: Corrección de páginas 5"
+  title: "ISSUE 1: Corrección de página 5"
 multipleAttempts: true
 rawFeedback: false
 traceAttempts: true

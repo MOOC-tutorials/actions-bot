@@ -3,7 +3,8 @@ const {handleInstallation} = require('./handlers/installation');
 const {handleRepository} = require('./handlers/repository');
 const mongoose = require('mongoose');
 
-const mongoUri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
+
+const mongoUri = (process.env.DB_USER) ? `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`: `mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`;
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,

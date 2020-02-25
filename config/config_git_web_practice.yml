@@ -14,16 +14,16 @@ users:
 - email: somen@email.com
   name: somen
 errorNoIssueOpen:
-  title: El issue asociado al fix fue cerrado
-  body: 'Al parecer el issue del fix asociado no está abierto, pero aún no se cumple
+  title: El issue asociado a la identificación de corrección fue cerrado
+  body: 'Al parecer el issue de la identificación de corrección asociada no está abierto, y aún no se cumple
     con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel
-    asociado a:'
+    asociado a: '
 errorConventionIssue:
   title: Un commit que no sigue la convención de código o FIX a realizar
   body: |-
     La convención de código a seguir:
-    - Para los arreglos: `<FIX ID>: <Comentario>`
-    - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+    - Para los arreglos: `<Identificador de la corrección>: <Comentario>`
+    - Para los arreglos con conflictos: `<Identificador de la corrección>: <Comentario por defecto del merge>`
 
     Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
     
@@ -34,14 +34,14 @@ errorCommentIssue:
   body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
     encontrar más información al respecto:\n'
 errorInvalidIssueNumber:
-  body: Al parecer los cambios realizados se identificaron con el número de corrección
+  body: Al parecer los cambios realizados se identificaron con el identificador de corrección
     incorrecto.
 initialIssue:
   number: 1
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+  body: "### Identificador de corrección: `FIX1` \n\n### Errores a corregir:\n- pagina5.html.  La imagen
     y el título de la página no corresponden.\n- pagina3.html.  El link del final
     de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
     el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
@@ -85,7 +85,7 @@ fixes:
     labels:
     - bug
     title: 'ISSUE 2: Corrección de páginas 1 y 4'
-    body: "### FIX ID: FIX2 \n\n### Errores a corregir:\n\n- pagina1.html.  El link
+    body: "### Identificador de corrección: `FIX2` \n\n### Errores a corregir:\n\n- pagina1.html.  El link
       del final de la hoja debe ir a la página 2.\n- pagina4.html.  El link del final
       de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En `pagina1.html`,
       \ cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda
@@ -198,7 +198,7 @@ fixes:
     labels:
     - bug
     title: 'ISSUE 3: Corrección de página 2'
-    body: "### FIX ID: FIX3 \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
+    body: "### Identificador de corrección: `FIX3` \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
       y el título de la página no son correctos.\n\n### Soluciones:\n\n- En `pagina2.html`,
       cambiar el link de la imagen a BD2.gif y el texto del título que se encuentra
       debajo de la imagen por 'Mi segunda página HTML'."
