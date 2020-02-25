@@ -22,7 +22,7 @@ exports.conventionIssue = async (context, commitMessage) => {
   const {data} = await api.issues.listForRepo({owner, repo, state: 'open', labels:['documentation']});
   //context.log(data);
   if(data.length > 0){
-    body = '@'+ owner + 'no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
+    body = '@'+ owner + ' , no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
     const {number} = data[0]
     await api.issues.createComment({
           owner,

@@ -15,6 +15,8 @@ const AttemptSchema = new Schema({
     type: String,
     required: true
   }
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Attempt', AttemptSchema);

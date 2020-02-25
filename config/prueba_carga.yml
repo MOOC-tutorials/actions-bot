@@ -23,10 +23,10 @@ errorConventionIssue:
   title: Un commit que no sigue la convención de código o FIX a realizar
   body: |-
     La convención de código a seguir:
-    - Para los arreglos: `<FIX ID>: <Comentario>`
-    - Para los arreglos con conflictos: `<FIX ID>: <Comentario por defecto del merge>`
+    - Para los arreglos: `<Identificación corrección>: <Comentario>`
+    - Para los arreglos con conflictos: `<Identificación corrección>: <Comentario por defecto del merge>`
 
-    Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
+    Igualmente, solo hay 2 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
     
     Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
 errorCommentIssue:
@@ -42,7 +42,7 @@ initialIssue:
   labels:
   - bug
   title: 'ISSUE 1: Corrección página 5'
-  body: "### FIX ID: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
+  body: "### Identificación corrección: `FIX1` \n\n### Errores a corregir:\n- pagina5.html.  La imagen
     y el título de la página no corresponden.\n\n### Soluciones:\n - En `pagina5.html`, cambiar
     el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
     la imagen por 'Mi quinta página HTML'.\n"
@@ -50,7 +50,7 @@ fixes:
 - title: FIX1
   files:
   - filename: html/pagina5.html
-    ref: refs/heads/fix_1
+    ref: refs/heads/master
     expectedValues:
     - type: DOM
       querySelector: "#imagen5"
@@ -64,12 +64,47 @@ fixes:
     number: 2
     labels:
     - bug
+    title: 'ISSUE 2: Corrección página 3'
+    body: "### Identificación corrección: `FIX2` \n\n### Errores a corregir:\n- pagina3.html.  La imagen
+    y el título de la página no corresponden.\n\n### Soluciones:\n - En `pagina3.html`, cambiar
+    el link de la imagen a BD3.gif y el texto del título que se encuentra debajo de
+    la imagen por 'Mi tercera página HTML'.\n"
+- title: FIX2
+  files:
+  - filename: html/pagina5.html
+    ref: refs/heads/master
+    expectedValues:
+    - type: DOM
+      querySelector: "#imagen5"
+      attribute: src
+      value: "../imagenes/BD5.gif"
+    - type: DOM
+      querySelector: "#titulo5"
+      attribute: textContent
+      value: Mi quinta página HTML
+  - filename: html/pagina3.html
+    ref: refs/heads/master
+    expectedValues:
+    - type: DOM
+      querySelector: "#imagen3"
+      attribute: src
+      value: "../imagenes/BD3.gif"
+    - type: DOM
+      querySelector: "#titulo3"
+      attribute: textContent
+      value: Mi tercera página HTML
+  nextIssue:
+    number: 3
+    labels:
+    - bug
     title: 'FIN de las correcciones'
     body: "Prueba de correcciones finalizada"
   actions:
   - type: GRADE
     data:
     - title: FIX1
-      totalPoints: 100
+      totalPoints: 50
+    - title: FIX2
+      totalPoints: 50
     - title: Incorrect convention
       totalPoints: -5

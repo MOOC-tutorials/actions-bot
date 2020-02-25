@@ -7,7 +7,10 @@ exports.grading = async (owner, repo, gradeValue, context) => {
           grade: gradeValue
       });
     const att = await grade.save((err) => {
-        if(err) context.log(err);
+        if(err){
+          context.log("Error creating grade:");
+          context.log(err);
+        }
       });
       context.log(att);
 }
