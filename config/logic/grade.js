@@ -21,7 +21,9 @@ exports.exerciseGrade = async (data, context) => {
     }
   }
   context.log(gradeValue);
+  
   const grade = await grading(owner, repo, gradeValue, context);
+
   context.log(grade);
   const {issues} = await api.issues.listForRepo({owner, repo, state: 'open'});
   context.log(issues);

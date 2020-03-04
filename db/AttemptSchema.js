@@ -14,9 +14,13 @@ const AttemptSchema = new Schema({
   repo: {
     type: String,
     required: true
+  },
+  email: {
+    type: String
   }
 }, {
   timestamps: true
 });
 
+AttemptSchema.index({email: 1, repo: 1});
 module.exports = mongoose.model('Attempt', AttemptSchema);

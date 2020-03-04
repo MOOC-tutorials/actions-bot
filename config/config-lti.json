@@ -1,0 +1,13 @@
+{
+    "development": {
+        "key": "CTE-test",
+        "secret": "SimpleSecret"
+    },
+    "test": {
+        "key": "CTE-test",
+        "secret": "SimpleSecret"
+    },
+    "production": {
+        "key": "CTE-test"
+    }
+}
