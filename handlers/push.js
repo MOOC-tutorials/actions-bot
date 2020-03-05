@@ -33,7 +33,9 @@ const validateCommit = async (context, files, fixInfo) => {
   const api = context.github;
   const {repository, ref} = context.payload;
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
+  context.log("This is the name of the owner", email);
   try{
     let valid = true;
     let currentFiles = [];
@@ -81,6 +83,7 @@ const validCommit = async (context, fixInfo, currentFiles) =>{
   const {repository} = context.payload;
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
 
   //Change code if required. Close issue. Create new issue. 
@@ -105,6 +108,7 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
 
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
   const config = getConfig(repo);
 
@@ -169,6 +173,7 @@ exports.handlePush = async (robot, context) => {
   const api = context.github;
   const {repository, commits, ref} = context.payload;
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
   const config = getConfig(repo);
   const grading = await checkGrading(owner, repo);

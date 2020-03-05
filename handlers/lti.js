@@ -73,7 +73,7 @@ function sendResultToCoursera(userEmail, examenId, grade) {
         provider.parse_request(null, {lis_outcome_service_url:outcome.serviceUrl, lis_result_sourcedid:outcome.sourceId});
         provider.outcome_service.send_replace_result(grade, function (err, result) {
             if (err) return reject(err);
-            resolve(result);
+            resolve(outcome);
         }
             );
         });

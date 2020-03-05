@@ -1,9 +1,14 @@
 const {grading} = require('../../utils/grade');
+
 const {checkAttempts} = require('../../utils/attempt');
+const lti = require('../../handlers/lti');
+
 
 exports.exerciseGrade = async (data, context) => {
   const api = context.github;
   const {owner, repo} = context.repo();
+  const {repository} = context.payload;
+  const email = repository.owner.email;
   let gradeValue = 0;
   let totalGrade = 0;
   for (let index = 0; index < data.length; index++) {
@@ -22,9 +27,17 @@ exports.exerciseGrade = async (data, context) => {
   }
   context.log(gradeValue);
   
-  const grade = await grading(owner, repo, gradeValue, context);
+  //const grade = await grading(owner, repo, gradeValue, context);
 
-  context.log(grade);
+  context.log("Sending the grade to ", owner, email, repo);
+
+  
+  gradeValue = (gradeValue<0)? 0.2 : gradeValue/5.0;
+
+  const grade2 = await lti.sendResultToCoursera(email, repo, gradeValue);
+
+  context.log("This is the result: "+grade2);
+
   const {issues} = await api.issues.listForRepo({owner, repo, state: 'open'});
   context.log(issues);
   if(issues && issues.length > 0){
