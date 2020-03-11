@@ -1,6 +1,0 @@
-show dbs
-show collections
-db.auth
-show dbs
-admin
-mongo ds239587.mlab.com:39587 -u lti-test -p 'lti-t3st1'
