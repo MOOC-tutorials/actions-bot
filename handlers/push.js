@@ -33,7 +33,9 @@ const validateCommit = async (context, files, fixInfo) => {
   const api = context.github;
   const {repository, ref} = context.payload;
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
+  context.log("This is the name of the owner", email);
   try{
     let valid = true;
     let currentFiles = [];
@@ -81,6 +83,7 @@ const validCommit = async (context, fixInfo, currentFiles) =>{
   const {repository} = context.payload;
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
 
   //Change code if required. Close issue. Create new issue. 
@@ -105,6 +108,7 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
 
   // TODO: Refactor to use context.repo object
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
   const config = getConfig(repo);
 
@@ -168,10 +172,10 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
 exports.handlePush = async (robot, context) => {
   const api = context.github;
   const {repository, commits, ref} = context.payload;
-  const owner = repository.owner.name;
-  const repo = repository.name;
+  const {name: owner, email} = repository.owner;
+  const {name: repo} = repository;
   const config = getConfig(repo);
-  const grading = await checkGrading(owner, repo);
+  const grading = await checkGrading(repo, email);
 
   if(!context.isBot && config && (!grading || config.multipleAttempts)){
     let newIssueCreated;
@@ -192,7 +196,7 @@ exports.handlePush = async (robot, context) => {
           context.log('Check commit:' + commitMessage);
           if (fixInfo) {
             // Validate commit made the correct changes and record attempt
-            if (traceAttempts) await addAttempt(context, owner, repo, commitMessage);
+            if (traceAttempts) await addAttempt(context, owner, repo, email, commitMessage);
             const {valid, currentFiles} = await validateCommit(context, files, fixInfo);
             if (valid) {
               context.log('Valid commit');
@@ -220,7 +224,7 @@ exports.handlePush = async (robot, context) => {
             }
           } else {
             context.log('Incorrect convention');
-            if (traceAttempts) await addAttempt(context, owner, repo, defaultAttemptTitle);
+            if (traceAttempts) await addAttempt(context, owner, repo, email, defaultAttemptTitle);
             await conventionIssue(context, commitMessage);
           }
     }

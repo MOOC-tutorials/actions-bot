@@ -4,13 +4,15 @@
   "description": "A Github App for a static web project exercise.",
   "main": "server.js",
   "scripts": {
-    "start": "probot run ./index.js"
+    "start": "node ./index.js"
   },
   "dependencies": {
     "probot": "^9.9.4",
     "jsdom": "^15.1.1",
     "mongoose": "^5.7.5",
-    "js-yaml": "^3.13.1"
+    "js-yaml": "^3.13.1",
+    "ims-lti": "^3.0.2",
+    "bluebird": "^3.7.2"
   },
   "engines": {
     "node": "10.1.x"

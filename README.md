@@ -6,6 +6,25 @@ A simple server written in vanilla Node.js for a Github App using Probot
 
 * Install Node.js `8^ - 10^`, and ensure access to a mongodb (tested with `3.2.6`) database (in case of enabling attempts and grading elements)
 
+* Add a `config-lti.json` file inside the `config` directory with the following structure to store secret and keys of the LTI integration:
+
+```json
+{
+    "development": {
+        "key": "DEVELOPMENT_KEY",
+        "secret": "DEVELOPMENT_SECRET"
+    },
+    "test": {
+        "key": "TEST_KEY",
+        "secret": "TEST_KEY"
+    },
+    "production": {
+        "key": "PRODUCTION_KEY"
+    }
+}
+
+```
+
 * Add a `.pem` file for Github API usage
 
 * Add an `.env` file or the environmental variables for:

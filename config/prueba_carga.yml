@@ -103,8 +103,8 @@ fixes:
   - type: GRADE
     data:
     - title: FIX1
-      totalPoints: 50
+      totalPoints: 0.5
     - title: FIX2
-      totalPoints: 50
+      totalPoints: 0.5
     - title: Incorrect convention
-      totalPoints: -5
+      totalPoints: -0.01
