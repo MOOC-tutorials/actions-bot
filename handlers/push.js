@@ -172,11 +172,10 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
 exports.handlePush = async (robot, context) => {
   const api = context.github;
   const {repository, commits, ref} = context.payload;
-  const owner = repository.owner.name;
-  const email = repository.owner.email;
-  const repo = repository.name;
+  const {name: owner, email} = repository.owner;
+  const {name: repo} = repository;
   const config = getConfig(repo);
-  const grading = await checkGrading(owner, repo);
+  const grading = await checkGrading(repo, email);
 
   if(!context.isBot && config && (!grading || config.multipleAttempts)){
     let newIssueCreated;
@@ -197,7 +196,7 @@ exports.handlePush = async (robot, context) => {
           context.log('Check commit:' + commitMessage);
           if (fixInfo) {
             // Validate commit made the correct changes and record attempt
-            if (traceAttempts) await addAttempt(context, owner, repo, commitMessage);
+            if (traceAttempts) await addAttempt(context, owner, repo, email, commitMessage);
             const {valid, currentFiles} = await validateCommit(context, files, fixInfo);
             if (valid) {
               context.log('Valid commit');
@@ -225,7 +224,7 @@ exports.handlePush = async (robot, context) => {
             }
           } else {
             context.log('Incorrect convention');
-            if (traceAttempts) await addAttempt(context, owner, repo, defaultAttemptTitle);
+            if (traceAttempts) await addAttempt(context, owner, repo, email, defaultAttemptTitle);
             await conventionIssue(context, commitMessage);
           }
     }
