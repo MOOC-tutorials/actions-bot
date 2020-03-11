@@ -16,7 +16,12 @@ exports.handleInstallation = async (robot, context) => {
             const owner = account.login;
             const config = getConfig(repo);
             await checkIssuesEnable(context, owner, repo);
-            const grading = await checkGrading(owner, repo);
+            const {userData} = await api.users.getByUsername({username: owner});
+            let grading = false;
+            if(userData){
+                context.log(userData);
+                grading = await checkGrading(repo, userData.email);
+            }
             if (config && config.initialIssue && (!grading || config.multipleAttempts)){
                 const {title, body} = config.initialIssue;
                 // Review duplicated issue and close them if any

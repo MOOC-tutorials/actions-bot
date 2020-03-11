@@ -52,6 +52,7 @@ exports.domModification = async function(data, context){
     const {files, pullRequest} = data;
     const {repository, after: sha} = context.payload;
     const owner = repository.owner.name;
+    const email = repository.owner.email;
     const repo = repository.name;
 
     let branch = DEFAULT_BRANCH;

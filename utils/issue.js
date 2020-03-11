@@ -15,6 +15,7 @@ exports.conventionIssue = async (context, commitMessage) => {
   const api = context.github;
   const {repository} = context.payload;
   const owner = repository.owner.name;
+  const email = repository.owner.email;
   const repo = repository.name;
   const config = getConfig(repo);
 
