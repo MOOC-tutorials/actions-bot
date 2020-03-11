@@ -63,6 +63,8 @@ exports.sendResultToCoursera = async (userEmail, examenId, grade) => {
                   if (err) return reject(err);
                   resolve(outcome);
               });
+        }).catch((err)=>{
+          reject(err);
         });
     });
 };
