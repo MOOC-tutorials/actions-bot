@@ -18,7 +18,7 @@ exports.registerCourseraActivity = (req) => {
       let {body} = req;
       
       if (!is_valid || !provider.outcome_service)
-        return reject(new Error("El envío de los parámetros desde Coursera no coincide."));
+        return reject(new Error("El envío de los parámetros desde Coursera no coincide:" + body));
       
       if (!body.custom_examen)
         return reject(

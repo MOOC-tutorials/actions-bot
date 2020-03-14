@@ -11,10 +11,11 @@ exports.registerStudent = async( examenId, userId, userEmail, serviceUrl, source
     activity,
   });
   const createdGrade = await grade.save();
-  context.log(createdGrade);
+  console.log(createdGrade);
 }
 
 exports.registerGrade = async(userEmail, examenId, gradeValue) =>{
+  examenId = examenId.startsWith("prueba_carga")? "prueba_carga": examenId;
   const registeredGrade = await Grade.findOneAndUpdate(
     {email: userEmail, examenId},
     {$set: {grade: gradeValue}},
