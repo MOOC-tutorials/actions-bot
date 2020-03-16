@@ -16,9 +16,9 @@ users:
   name: somen
 errorNoIssueOpen:
   title: El issue asociado al fix fue cerrado
-  body: 'Al parecer el issue del fix asociado no está abierto, pero aún no se cumple
-    con los elementos necesarios. Revisa los issues cerrados y abre de nuevo aquel
-    asociado a:'
+  body: 'Al parecer el issue de la correción no está abierto, y aún no se cumple
+    con los elementos necesarios. Revisa los issues cerrados o actualiza la página para
+     ver el issue asociado a: '
 errorConventionIssue:
   title: Un commit que no sigue la convención de código o FIX a realizar
   body: |-
@@ -33,7 +33,7 @@ errorCommentIssue:
   labels:
   - bug
   body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
-    encontrar más información al respecto:\n'
+    encontrar más información al respecto:\n '
 errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el número de corrección
     incorrecto.

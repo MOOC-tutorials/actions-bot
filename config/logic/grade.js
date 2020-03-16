@@ -60,7 +60,7 @@ exports.exerciseGrade = async (data, context) => {
   } else {
     gradeValue = gradeValue * 100;
     totalGrade = totalGrade * 100;
-    const body = '@' + owner + ' la calificación obtenida fue: `'+ gradeValue +'/'+ totalGrade +'`';
+    const body = '@' + owner + ' la calificación obtenida fue: `'+ gradeValue.toFixed(2) +'/'+ totalGrade.toFixed(2) +'`';
     const title = 'Calificación'
     const issue = await api.issues.create({
           owner,

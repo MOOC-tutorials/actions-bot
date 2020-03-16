@@ -158,11 +158,11 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
     } else {
       context.log('Comment for fix: '+ title);
         body =  config.errorNoIssueOpen.body + title;
-        title = config.errorNoIssueOpen.title;
+        const issuetitle = config.errorNoIssueOpen.title;
         await api.issues.create({
           owner,
           repo,
-          title,
+          title: issuetitle,
           body
         });
     }
