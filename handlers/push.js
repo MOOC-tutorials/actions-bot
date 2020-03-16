@@ -77,7 +77,7 @@ const validateCommit = async (context, files, fixInfo) => {
     context.log({valid, currentFiles});
     return {valid, currentFiles};
   } catch(err){
-    context.error(err)
+    context.log(err);
     const valid = false;
     const currentFiles = [];
     return {valid, currentFiles};
