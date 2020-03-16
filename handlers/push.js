@@ -57,12 +57,12 @@ const validateCommit = async (context, files, fixInfo) => {
           const fileData = await api.repos.getContents({
             owner,
             repo,
-            path: file.filename,
+            path: fixFileInfo.filename,
             ref
           });
           const fileText = Buffer.from(fileData.data.content, 'base64').toString();
           
-          context.log(file.filename);
+          context.log(fixFileInfo.filename);
           context.log(fixInfo.files);
           validChange = validateFileModifications(fileText, fixFileInfo);
         }
