@@ -15,7 +15,7 @@ users:
 - email: somen@email.com
   name: somen
 errorNoIssueOpen:
-  title: El issue asociado al fix fue cerrado
+  title: El issue asociado al fix fue cerrado o aún no ha sido abierto
   body: 'Al parecer el issue de la correción no está abierto, y aún no se cumple
     con los elementos necesarios. Revisa los issues cerrados o actualiza la página para
      ver el issue asociado a: '

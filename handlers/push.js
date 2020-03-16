@@ -39,9 +39,15 @@ const validateCommit = async (context, files, fixInfo) => {
   try{
     let valid = true;
     let currentFiles = [];
-    for (let index = 0; index < files.length; index++) {
-      const file = files[index];   
-      const fixFileInfo = fixInfo.files.find(fixfile => fixfile.filename === file.filename);
+    for (let index=0; index < files.length && valid; index++){ 
+      const file = files[index];
+      const fileInfo = fixInfo.files.find(fixfile => fixfile.filename === file.filename);
+      if(!fileInfo){
+        valid = false;
+      }
+    }
+    for (let index = 0; index < fixInfo.files.length && valid; index++) {
+      const fixFileInfo = fixInfo.files[index];
       
       if (fixFileInfo){
         const {ref : fixFileRef } = fixFileInfo;
