@@ -54,7 +54,7 @@ const validateCommit = async (context, files, fixInfo) => {
             path: file.filename,
             ref
           });
-          const fileText = new Buffer(fileData.data.content, 'base64').toString();
+          const fileText = Buffer.from(fileData.data.content, 'base64').toString();
           
           context.log(file.filename);
           context.log(fixInfo.files);
@@ -204,7 +204,7 @@ exports.handlePush = async (robot, context) => {
               //Close open issues
               await closeOpenIssues(context, owner, repo);
               // Create new issue
-              const {number = 1} = newIssueCreated || {}
+              const {number = 1} = newIssueCreated || {}  // NOTE: Needed to evaluate just one commit per fix if multiple attempts in a single push were made
               if(fixInfo.nextIssue !== newIssueCreated && fixInfo.nextIssue.number > number){
                 newIssueCreated = fixInfo.nextIssue;
                 const {title, body, labels} = fixInfo.nextIssue;

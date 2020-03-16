@@ -32,7 +32,7 @@ function _fileDomModification(fileData, valueChanges, path){
     //CONTENT
     let newDom = fileData.data.content;
     let update = '';
-    const contentBuffer = new Buffer(newDom, 'base64');
+    const contentBuffer = Buffer.from(newDom, 'base64');
     newDom = contentBuffer.toString();
 
     for (let index = 0; index < valueChanges.length; index++) {
@@ -94,7 +94,7 @@ exports.domModification = async function(data, context){
           });
       
         const {newDom, message} = _fileDomModification(fileData, valueChanges, path)
-        const buffer = new Buffer(newDom);
+        const buffer = Buffer.from(newDom);
         const newFileContent = buffer.toString('base64');
         const sha = fileData.data.sha;
 
