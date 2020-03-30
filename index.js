@@ -56,7 +56,7 @@ const robot = robot => {
             robot.log("USUARIO DE COURSERA ID: ", userId, "INGRESANDO AL EXAMEN", examenId);
             robot.log("Esto tiene la respuesta:" + resp);
 
-            res.redirect(codelabs_sire + "/" + resp.ExamenId);
+            res.redirect(codelabs_site + "/" + resp.ExamenId);
 
 
            
