@@ -32,258 +32,131 @@ errorCommentIssue:
   - bug
   body: "Al parecer los cambios realizados no son los esperados. A continuación puedes encontrar más información al respecto: \n"
 errorInvalidIssueNumber:
-  body: Los cambios realizados no lograron identificarse como los requeridos por el issue actualmente abierto. Puede que se haya identificado
-    el commit realizado con una identificación inválida o no se siguieron las indicaciones respecto a la rama donde los cambios deben ser realizados.
+  body: Los cambios realizados no lograron identificarse como los requeridos por el issue actualmente abierto. Puede que se haya generado un conflicto entre ramas, que
+    el commit realizado tenga una identificación inválida o no se siguieron las indicaciones respecto a la rama donde se deben realizar los cambios.
 initialIssue:
   number: 1
   labels:
-  - bug
-  title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### Identificador del error o acción: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
-    y el título de la página no corresponden.\n- pagina3.html.  El link del final
-    de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
-    el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
-    la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de navegación
-    a la siguiente página y colocarle el nombre correcto ('Mi cuarta página HTML').\n\n ### Condiciones:\n- Los cambios 
-    deben ser realizados en una nueva rama con el nombre `fix_1`"
+  - 
+  title: 'ISSUE 1: Agregar nueva receta'
+  body: "### Identificador la acción: STEP1 \n\n###Acciones a realizar: \n- Cree la rama 'receta_1' a partir de la rama 'desarrollo'.
+    \n- Agregue la receta colombiana Arroz con Coco en la ruta 'recetas/Colombia'. \n- Incluya la receta en el archivo 'index.html'" 
 fixes:
-- title: FIX1
+- title: STEP1
   files:
-  - filename: html/pagina1.html
-    ref: refs/heads/fix_1
+  - filename: recetas/Colombia/arroz_coco.html
+    ref: refs/heads/receta_1
     expectedValues:
     - type: DOM
       querySelector: "#titulo1"
       attribute: textContent
-      value: Mi primera página HTML
+      value: Arroz con coco
     - type: DOM
       querySelector: "#imagen1"
       attribute: src
-      value: "../imagenes/BD1.gif"
-  - filename: html/pagina3.html
-    ref: refs/heads/fix_1
+      value: "../imagenes/arroz_coco.jpg"
+  - filename: recetas/index.html
+    ref: refs/heads/receta_1
     expectedValues:
     - type: DOM
-      querySelector: "#enlace3"
+      querySelector: "#colombia2"
       attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: href
-      value: pagina4.html
-  - filename: html/pagina5.html
-    ref: refs/heads/fix_1
-    expectedValues:
-    - type: DOM
-      querySelector: "#imagen5"
-      attribute: src
-      value: "../imagenes/BD5.gif"
-    - type: DOM
-      querySelector: "#titulo5"
-      attribute: textContent
-      value: Mi quinta página HTML
+      value: Arroz con coco
+  - filename: imagenes/arroz_coco
+    ref: refs/heads/receta_1
   nextIssue:
     number: 2
     labels:
-    - bug
-    title: 'ISSUE 2: Merge de correcciones de las páginas 3 y 5'
-    body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama creada anteriormente 
-    (`fix_1`) con la rama de integración `master`\n\n **NOTA:** Recuerde que para la identificación de la acción requerida es necesario
-    Establecer como comentario del commit de merge algo como `MERGE1: Merge de las correcciones`. Igualmente, antes de hacer el merge, actualice
-    la rama local `master` con un `pull` para obetener los últimos cambios que puedan haber pasado sobre la misma."
+    - 
+    title: 'ISSUE 2: Merge de los cambios con desarrollo'
+    body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama 'receta_1' 
+    con la rama 'desarrollo'\n\n **NOTA:** Recuerde que para la identificación de la acción requerida es necesario
+    Establecer como comentario del commit de merge algo como 'MERGE1: Merge de los cambios'."
   actions:
   - type: DOM
     data:
       pullRequest:
-        pullBase: master
-        pullHead: fix_total
+        pullBase: desarrollo
+        pullHead: cambios_index
         createPull: false
         mergePull: true
         mergeMessage: Merge automático
       files:
-      - filename: html/pagina1.html
+      - filename: recetas/index.html
         valueChanges:
-        - querySelector: "#titulo1"
+        - querySelector: "#colombia1"
           attribute: textContent
-          value: Mi primera página HTML
-        - querySelector: "#imagen1"
-          attribute: src
-          value: "../imagenes/BD1.gif"
-        - querySelector: "#enlace1"
-          attribute: href
-          value: pagina2.html
-        - querySelector: "#enlace1"
-          attribute: textContent
-          value: Mi segunda página HTML
-      - filename: html/pagina2.html
-        valueChanges:
-        - querySelector: "#titulo2"
-          attribute: textContent
-          value: Mi segunda página HTML
-        - querySelector: "#imagen2"
-          attribute: src
-          value: "../imagenes/BD2.gif"
-        - querySelector: "#enlace2"
-          attribute: href
-          value: pagina3.html
-        - querySelector: "#enlace2"
-          attribute: textContent
-          value: Mi tercera página HTML
-      - filename: html/pagina3.html
-        valueChanges:
-        - querySelector: "#titulo3"
-          attribute: textContent
-          value: Mi tercera página HTML
-        - querySelector: "#imagen3"
-          attribute: src
-          value: "../imagenes/BD3.gif"
-        - querySelector: "#enlace3"
-          attribute: href
-          value: pagina4.html
-        - querySelector: "#enlace3"
-          attribute: textContent
-          value: Mi cuarta página HTML
-      - filename: html/pagina4.html
-        valueChanges:
-        - querySelector: "#titulo4"
-          attribute: textContent
-          value: Mi cuarta página HTML
-        - querySelector: "#imagen4"
-          attribute: src
-          value: "../imagenes/BD4.gif"
-        - querySelector: "#enlace4"
-          attribute: href
-          value: pagina5.html
-        - querySelector: "#enlace4"
-          attribute: textContent
-          value: Mi quinta página HTML
-      - filename: html/pagina5.html
-        valueChanges:
-        - querySelector: "#titulo5"
-          attribute: textContent
-          value: Mi quinta página HTML
-        - querySelector: "#imagen5"
-          attribute: src
-          value: "../imagenes/BD5.gif"
-        - querySelector: "#enlace5"
-          attribute: href
-          value: pagina1.html
-        - querySelector: "#enlace5"
-          attribute: textContent
-          value: Mi primera página HTML
+          value: Ajiaco santafereño
 - title: MERGE1
   files:
-  - filename: html/pagina1.html
-    ref: refs/heads/master
+  - filename: recetas/Colombia/arroz_coco.html
+    ref: refs/heads/desarrollo
     expectedValues:
     - type: DOM
       querySelector: "#titulo1"
       attribute: textContent
-      value: Mi primera página HTML
+      value: Arroz con coco
     - type: DOM
       querySelector: "#imagen1"
       attribute: src
-      value: "../imagenes/BD1.gif"
-    - type: DOM
-      querySelector: "#enlace1"
-      attribute: href
-      value: pagina2.html
-    - type: DOM
-      querySelector: "#enlace1"
-      attribute: textContent
-      value: Mi segunda página HTML
-  - filename: html/pagina2.html
-    ref: refs/heads/master
+      value: "../imagenes/arroz_coco.jpg"
+  - filename: recetas/index.html
+    ref: refs/heads/desarrollo
     expectedValues:
     - type: DOM
-      querySelector: "#titulo2"
+      querySelector: "#colombia2"
       attribute: textContent
-      value: Mi segunda página HTML
-    - type: DOM
-      querySelector: "#imagen2"
-      attribute: src
-      value: "../imagenes/BD2.gif"
-    - type: DOM
-      querySelector: "#enlace2"
-      attribute: textContent
-      value: Mi tercera página HTML
-    - type: DOM
-      querySelector: "#enlace2"
-      attribute: href
-      value: pagina3.html
-  - filename: html/pagina3.html
-    ref: refs/heads/master
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo3"
-      attribute: textContent
-      value: Mi tercera página HTML
-    - type: DOM
-      querySelector: "#imagen3"
-      attribute: src
-      value: "../imagenes/BD3.gif"
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: href
-      value: pagina4.html
-  - filename: html/pagina4.html
-    ref: refs/heads/master
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo4"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#imagen4"
-      attribute: src
-      value: "../imagenes/BD4.gif"
-    - type: DOM
-      querySelector: "#enlace4"
-      attribute: textContent
-      value: Mi quinta página HTML
-    - type: DOM
-      querySelector: "#enlace4"
-      attribute: href
-      value: pagina5.html
-  - filename: html/pagina5.html
-    ref: refs/heads/master
-    expectedValues:
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: href
-      value: pagina1.html
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen5"
-      attribute: src
-      value: "../imagenes/BD5.gif"
-    - type: DOM
-      querySelector: "#titulo5"
-      attribute: textContent
-      value: Mi quinta página HTML
+      value: Arroz con coco
+  - filename: imagenes/arroz_coco
+    ref: refs/heads/desarrollo
   nextIssue:
     number: 3
+    labels:
+    - 
+    title: 'ISSUE 3: Crear una rama de lanzamiento'
+    body: "### Identificador la acción: STEP2 \n\n###Acciones a realizar: \n- Cree la rama 'release' a partir de la rama 'desarrollo'.
+    \n- Verifique que la receta 'Arroz con coco' cuente con los elementos básicos (título, imagen, ingredientes y preparación). \n De no ser así, realice los ajustes correspondientes sobre la rama." 
+  actions:
+  - type: DOM
+    data:
+      pullRequest:
+        pullBase: desarrollo
+        pullHead: cambios_receta
+        createPull: false
+        mergePull: true
+        mergeMessage: Merge automático
+      files:
+      - filename: recetas/Colombia/arroz_coco.html
+        valueChanges:
+        - querySelector: "#titulo1"
+          attribute: textContent
+          value: ""
+        - querySelector: "#imagen1"
+          attribute: src
+          value: ""
+- title: STEP2
+  files:
+  - filename: recetas/Colombia/arroz_coco.html
+    ref: refs/heads/release
+    expectedValues:
+    - type: DOM
+      querySelector: "#titulo1"
+      attribute: textContent
+      value: Arroz con coco
+    - type: DOM
+      querySelector: "#imagen1"
+      attribute: src
+      value: "../imagenes/arroz_coco.jpg"
+  nextIssue:
+    number: 4
     title: Final del ejercicio
     labels: []
     body: |-
-      **Los errores fueron corregidos.**
-
-       Elementos pendientes:
-
-       - [ ] Revisar las ramas disponibles en el repositorio.
-
-       - [ ] Realizar una revisión general de los cambios hechos viendo el historial de commits del repositorio en las diferentes ramas.
+      **Ha llegago al final del ejercicio. ¡Buen trabajo!**
   actions:
   - type: GRADE
     data:
-    - title: FIX1
+    - title: STEP1
       totalPoints: 50
     - title: MERGE1
       totalPoints: 50
