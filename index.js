@@ -9,6 +9,7 @@ const fs = require('fs');
 // const {registerGrade} = require('./utils/grade');
 
 const key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, 'utf8');
+const codelabs_site = process.env.CODELABS_SITE;
 
 const probot = createProbot({
   id: process.env.APP_ID,
@@ -45,8 +46,9 @@ const robot = robot => {
   const route = robot.route("/probot");
   route.use(bodyParser.urlencoded({extended: false}));
   route.post('/lti_access', function (req, res, next) {
+        
         // TODO: Change to use await/async?
-        //app.log("Coursera response 2 POST:/access/", req.body);
+        
         lti.registerCourseraActivity(req).then(function (resp) {
             robot.log("LTI PARAMS: ", resp);
             var userId = resp.EstudianteMail;
@@ -54,14 +56,10 @@ const robot = robot => {
             robot.log("USUARIO DE COURSERA ID: ", userId, "INGRESANDO AL EXAMEN", examenId);
             robot.log("Esto tiene la respuesta:" + resp);
 
-            res.send("Estos son los parámetros:" + userId + "/" + examenId);
+            res.redirect(codelabs_site + "/" + resp.ExamenId);
 
-            //var grade = 0.87;
-            //res.send("Se envió la nota: "+grade+" del estudiante " + resp.EstudianteMail);
-            //var grade = registerGrade(userId, examenId, grade).then(function(outcome){
-            //               robot.log("Este es el documento con la nota"+outcome);});
-            //lti.sendResultToCoursera(userId, examenId, grade).then(function(outcome){
-            // robot.log(outcome);
+
+           
         }).catch(next);
     });
 };
