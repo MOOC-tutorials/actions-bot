@@ -39,7 +39,9 @@ initialIssue:
   labels:
   - bug
   title: 'ISSUE 1: Agregar nueva receta'
-  body: "### Identificador la acción: STEP1 \n\n ## Acciones a realizar: 
+  body: "### Identificador la acción: STEP1 
+    \n Agregue una nueva receta de comida Colombiana al sitio web.
+    \n ## Acciones a realizar: 
     \n- Cree la rama 'receta_1' a partir de la rama 'desarrollo'.
     \n- Agregue la receta colombiana Arroz con Coco (arroz_coco.html) en la ruta 'recetas/Colombia'. 
     \n- Agregue la imagen de la receta (arroz_coco.jpg) en la ruta '/imagenes'.
@@ -72,7 +74,9 @@ fixes:
     labels:
     - bug
     title: 'ISSUE 2: Merge de los cambios con desarrollo'
-    body: "### Identificador del error o acción: MERGE1 \n\n ## Acciones a realizar: 
+    body: "### Identificador de la acción: MERGE1 
+    \n Ahora fusione su feature branch con desarrollo.
+    \n ## Acciones a realizar: 
     \n- Hacer merge de la rama 'receta_1' con la rama 'desarrollo'
     \n **NOTA:** Recuerde que para la identificación de la acción requerida es necesario
     establecer como comentario del commit de merge algo como 'MERGE1: Merge de los cambios'."
@@ -118,7 +122,9 @@ fixes:
     labels:
     - bug
     title: 'ISSUE 3: Crear una rama de lanzamiento'
-    body: "### Identificador la acción: STEP2 \n\n###Acciones a realizar: 
+    body: "### Identificador la acción: STEP2 
+    \n Es hora de crear un nuevo release con los cambios realizados, revise que todo este bien.
+    \n ## Acciones a realizar: 
     \n- Cree la rama 'release' a partir de la rama 'desarrollo'.
     \n- Verifique que las recetas 'Ajiaco' y 'Arroz con coco' cuenten con los elementos básicos (título, imagen, ingredientes y preparación). 
     \n De no ser así, realice los ajustes correspondientes sobre la rama." 
