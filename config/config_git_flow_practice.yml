@@ -43,7 +43,6 @@ initialIssue:
     \n Agregue una nueva receta de comida Colombiana al sitio web.
     \n ### Acciones a realizar: 
     \n- Agregue la receta colombiana Arroz con Coco (arroz_coco.html) en la ruta 'recetas/Colombia'. 
-    \n- Agregue la imagen de la receta (arroz_coco.jpg) en la ruta '/imagenes'.
     \n- Incluya la receta en el archivo 'index.html'
     \n ### Condiciones: 
     \n - Los cambios solicitados deben realizarse en una nueva rama llamada 'receta_1', esta rama debe crearse a partir de la rama 'desarrollo'." 
@@ -93,7 +92,7 @@ fixes:
         valueChanges:
         - querySelector: "#titulo1"
           attribute: textContent
-          value: ""
+          value: "(Sin titulo)"
 - title: MERGE1
   files:
   - filename: recetas/Colombia/arroz_coco.html
@@ -130,7 +129,7 @@ fixes:
   - type: DOM
     data:
       pullRequest:
-        pullBase: release
+        pullBase: desarrollo
         pullHead: error_receta_2
         createPull: false
         mergePull: true
@@ -140,10 +139,10 @@ fixes:
         valueChanges:
         - querySelector: "#titulo1"
           attribute: textContent
-          value: ""
+          value: "(Sin titulo)"
         - querySelector: "#imagen1"
           attribute: src
-          value: ""
+          value: "(Sin imagen)"
 - title: STEP2
   files:
   - filename: recetas/Colombia/arroz_coco.html
@@ -169,13 +168,15 @@ fixes:
     title: Final del ejercicio
     labels: []
     body: |-
-      **Ha llegago al final del ejercicio y su código esta listo para integrarse con master. ¡Buen trabajo!**
+      Está lista la nueva versión del sitio y su código esta listo para integrarse con master. ¡Buen trabajo!
   actions:
   - type: GRADE
     data:
     - title: STEP1
-      totalPoints: 50
+      totalPoints: 40
     - title: MERGE1
-      totalPoints: 50
+      totalPoints: 20
+    - title: STEP2
+      totalPoints: 40
     - title: Incorrect convention
       totalPoints: -5
