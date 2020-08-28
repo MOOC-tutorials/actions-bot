@@ -1,5 +1,6 @@
 ---
 traceAttempts: true
+multipleAttempts: true
 defaultAttemptTitle: Incorrect convention
 rawFeedback: false
 users:

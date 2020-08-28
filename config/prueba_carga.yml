@@ -49,7 +49,7 @@ initialIssue:
 fixes:
 - title: FIX1
   files:
-  - filename: html/pagina5.html
+  - filename: pagina5.html
     ref: refs/heads/master
     expectedValues:
     - type: DOM
@@ -71,7 +71,7 @@ fixes:
     la imagen por 'Mi tercera página HTML'.\n"
 - title: FIX2
   files:
-  - filename: html/pagina5.html
+  - filename: pagina5.html
     ref: refs/heads/master
     expectedValues:
     - type: DOM
@@ -82,7 +82,7 @@ fixes:
       querySelector: "#titulo5"
       attribute: textContent
       value: Mi quinta página HTML
-  - filename: html/pagina3.html
+  - filename: pagina3.html
     ref: refs/heads/master
     expectedValues:
     - type: DOM

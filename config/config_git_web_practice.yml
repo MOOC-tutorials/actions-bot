@@ -1,5 +1,6 @@
 ---
 traceAttempts: true
+multipleAttempts: true
 defaultAttemptTitle: Incorrect convention
 rawFeedback: false
 users:
@@ -302,13 +303,13 @@ fixes:
   - type: GRADE
     data:
     - title: FIX1
-      totalPoints: 30
+      totalPoints: 0.3
     - title: FIX2
-      totalPoints: 50
+      totalPoints: 0.5
     - title: FIX3
-      totalPoints: 20
+      totalPoints: 0.2
     - title: Incorrect convention
-      totalPoints: -5
+      totalPoints: -0.05
   - type: DOM
     data:
       files:

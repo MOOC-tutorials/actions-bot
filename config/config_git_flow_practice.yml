@@ -174,10 +174,10 @@ fixes:
   - type: GRADE
     data:
     - title: STEP1
-      totalPoints: 40
+      totalPoints: 0.4
     - title: MERGE1
-      totalPoints: 20
+      totalPoints: 0.2
     - title: STEP2
-      totalPoints: 40
+      totalPoints: 0.4
     - title: Incorrect convention
-      totalPoints: -5
+      totalPoints: -0.05
