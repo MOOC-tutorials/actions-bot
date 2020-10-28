@@ -10,7 +10,7 @@ exports.exerciseGrade = async (data, context) => {
   const {email} = repository.owner;
 
   console.log("========PAYLOAD========");
-  console.log(repository);
+  console.log(context);
   console.log("========PAYLOAD========");
 
 
