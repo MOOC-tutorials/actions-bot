@@ -21,8 +21,6 @@ exports.registerGrade = async(userEmail, eId, gradeValue) =>{
     {email: userEmail, examenId: eId},
     {$set: {grade: gradeValue}},
     {new: true, useFindAndModify: false, sort: {createdAt: -1}});
-  console.log(userEmail, eId);
-  console.log(registeredGrade);
   return registeredGrade;
 }
 
