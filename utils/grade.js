@@ -15,10 +15,10 @@ exports.registerStudent = async( examenId, userId, userEmail, serviceUrl, source
   console.log(createdGrade);
 }
 
-exports.registerGrade = async(userEmail, examenId, gradeValue) =>{
-  examenId = examenId.startsWith("prueba_carga")? "prueba_carga": examenId;
+exports.registerGrade = async(userEmail, eId, gradeValue) =>{
+  eId = eId.startsWith("prueba_carga")? "prueba_carga": eId;
   const registeredGrade = await Grade.findOneAndUpdate(
-    {email: userEmail, examenId},
+    {email: userEmail, examenId: eId},
     {$set: {grade: gradeValue}},
     {new: true, useFindAndModify: false, sort: {createdAt: -1}});
   return registeredGrade;
