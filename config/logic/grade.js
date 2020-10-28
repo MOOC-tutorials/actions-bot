@@ -9,6 +9,9 @@ exports.exerciseGrade = async (data, context) => {
   const {repository} = context.payload;
   const {email} = repository.owner;
 
+  console.log("========PAYLOAD========");
+  console.log(repository);
+  console.log("========PAYLOAD========");
 
 
   let gradeValue = 0;
@@ -39,8 +42,6 @@ exports.exerciseGrade = async (data, context) => {
     context.log("Error sending result:");
     context.log(err);
   });
-
-  context.log("This is the result: ", result);
 
   await deleteAttempts(context, owner, repo, email);
 
