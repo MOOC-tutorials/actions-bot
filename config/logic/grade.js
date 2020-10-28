@@ -9,10 +9,6 @@ exports.exerciseGrade = async (data, context) => {
   const {repository} = context.payload;
   const {email} = repository.owner;
 
-  console.log("========PAYLOAD========");
-  console.log(context);
-  console.log("========PAYLOAD========");
-
 
   let gradeValue = 0;
   let totalGrade = 0;
