@@ -9,6 +9,7 @@ exports.registerStudent = async( examenId, userId, userEmail, serviceUrl, source
     serviceUrl,
     sourceId,
     activity,
+    grade:0,
   });
   const createdGrade = await grade.save();
   console.log(createdGrade);
