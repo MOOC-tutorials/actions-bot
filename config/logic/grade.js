@@ -19,10 +19,12 @@ exports.exerciseGrade = async (data, context) => {
 
     if(totalPoints < 0){
       // Negative total points - removes points for each occurence
-      gradeValue += totalPoints * occurrences;
+      // 9-11-2020: Do not remove points
+      // gradeValue += totalPoints * occurrences;
     } else if (occurrences > 0) {
       totalGrade += totalPoints
-      gradeValue += totalPoints / occurrences;
+      // 9-11-2020: Do not divide by occurences
+      gradeValue += totalPoints;
     } else {
       throw 'Hubo criterios en los que no se hicieron intentos por parte del estudiante. '+
             'Es probable que haya un error en la definición de los criterios.';
