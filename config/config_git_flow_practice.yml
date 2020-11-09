@@ -43,10 +43,9 @@ initialIssue:
     \n Se han asignado ciertas funcionalidades al equipo de desarrollo para mejorar el sitio de recetas. 
     \n A usted le correspondió agregar una nueva receta de comida Colombiana.
     \n ### Acciones a realizar: 
+    \n- Cree la rama `receta_1` a partir de la rama `desarrollo`.
     \n- Agregue la receta colombiana Arroz con Coco (arroz_coco.html) en la ruta `recetas/Colombia`. 
-    \n- Incluya la receta en el archivo `index.html`.
-    \n ### Condiciones: 
-    \n - Los cambios solicitados deben realizarse en una nueva rama llamada `receta_1`, esta rama debe crearse a partir de la rama `desarrollo`." 
+    \n- Incluya la receta en el archivo `index.html`." 
 fixes:
 - title: STEP1
   files:
@@ -76,7 +75,8 @@ fixes:
     body: "### Identificador de la acción: MERGE1 
     \n Dado que su funcionalidad esta terminada, fusione los cambios con `desarrollo`. Es probable que el equipo automatizado también lo haya hecho.
     \n ### Acciones a realizar: 
-    \n- Hacer merge de la rama `receta_1` con la rama `desarrollo`
+    \n- Hacer pull para actualizar el repositorio.
+    \n- Hacer merge de la rama `receta_1` con la rama `desarrollo`.
     \n **NOTA:** Recuerde que para la identificación de la acción requerida es necesario
     establecer como comentario del commit de merge algo como `MERGE1: Merge de los cambios`."
   actions:
@@ -122,10 +122,9 @@ fixes:
     body: "### Identificador la acción: STEP2 
     \n En este punto, usted y el equipo automatizado ya han realizado cambios suficientes en el repositorio y es hora de crear un nuevo release.
     \n ### Acciones a realizar: 
-    \n- Verifique que las recetas `Ajiaco` y `Arroz con coco` cuenten con los elementos básicos (título, imagen, ingredientes y preparación). 
-    \n De no ser así, realice los ajustes correspondientes sobre la rama.
-    \n ### Condiciones: 
-    \n - La rama `release` debe crearse a partir de la rama `desarrollo`." 
+    \n- Cree la rama `release` a partir de la rama `desarrollo`.
+    \n- Verifique que la receta `Ajiaco` cuente con los elementos básicos (título, imagen, ingredientes y preparación). 
+    \n De no ser así, realice los ajustes correspondientes sobre la rama." 
   actions:
   - type: DOM
     data:
