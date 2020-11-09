@@ -288,4 +288,4 @@ fixes:
     - title: MERGE1
       totalPoints: 0.50
     - title: Incorrect convention
-      totalPoints: -5
+      totalPoints: -0.05
