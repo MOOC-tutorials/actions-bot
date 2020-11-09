@@ -284,8 +284,8 @@ fixes:
   - type: GRADE
     data:
     - title: FIX1
-      totalPoints: 50
+      totalPoints: 0.50
     - title: MERGE1
-      totalPoints: 50
+      totalPoints: 0.50
     - title: Incorrect convention
       totalPoints: -5
