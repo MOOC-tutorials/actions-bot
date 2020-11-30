@@ -45,8 +45,8 @@ initialIssue:
   body: "### Identificador de corrección: `FIX1` \n\n### Errores a corregir:\n- pagina5.html.  La imagen
     y el título de la página no corresponden.\n- pagina3.html.  El link del final
     de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
-    el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
-    la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de la navegación
+    el link de la imagen a 'BD5.gif' y el texto del título que se encuentra debajo de
+    la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de navegación a la página siguiente ('pagina4.html')
     y colocarle el nombre correcto ('Mi cuarta página HTML')."
 fixes:
 - title: FIX1
