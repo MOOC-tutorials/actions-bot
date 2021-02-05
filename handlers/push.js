@@ -51,6 +51,7 @@ const validateCommit = async (context, files, fixInfo) => {
       
       if (fixFileInfo){
         const {ref : fixFileRef } = fixFileInfo;
+        context.log("------------fixFileInfo--------------");
         context.log(fixFileInfo);
         let validChange = (!fixFileRef || fixFileRef === ref) && fixFileInfo;
         if (validChange){
@@ -62,14 +63,17 @@ const validateCommit = async (context, files, fixInfo) => {
           });
           const fileText = Buffer.from(fileData.data.content, 'base64').toString();
           
-          context.log(fixFileInfo.filename);
-          context.log(fixInfo.files);
+          
+          context.log("-------------fixFileInfo.filename-------------" + fixFileInfo.filename);
+          context.log("-------------fixInfo.files-------------" + fixInfo.files);
           validChange = validateFileModifications(fileText, fixFileInfo);
         }
         if(!validChange){
           // TODO: Review if a partial 'for' is better
           valid = false;
           currentFiles.push(fixFileInfo);
+          context.log("------------currentFiles--------------");
+          context.log(currentFiles);
           break;
         }
       }
@@ -125,6 +129,8 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
     if(!currentFiles){
       currentFiles = files;
     }
+    context.log("--------------------rawFeedback");
+    context.log(rawFeedback);
     const filesToObject = {...currentFiles};
     const expectedChanges = prettifyJson(filesToObject, rawFeedback);
     body += '\n`' + commitMessage + '`\n\n' + expectedChanges;
@@ -188,9 +194,11 @@ exports.handlePush = async (robot, context) => {
     await checkIssuesEnable(context, owner, repo);
     context.log('Check commits');
     context.log(commits);
-    for(let i = 0; i < commits.length; i++){
-          const commit = commits[i];
-          let commitMessage = commit.message.split(':')[0]
+    //for(let i = 0; i < commits.length; i++){
+          //const commit = commits[i];
+          const commit = commits[commits.length-1];
+          let commitMessage = commit.message.split(':')[0];
+          let commitMessage1 = commit.message;
           const commitInfo = await api.repos.getCommit({
               owner,
               repo,
@@ -199,6 +207,7 @@ exports.handlePush = async (robot, context) => {
           const files = commitInfo.data.files;
           const {fixes, traceAttempts, defaultAttemptTitle, rawFeedback} = config;
           const fixInfo = fixes.find(fix => fix.title === commitMessage);
+          context.log(rawFeedback);
           context.log('Check commit:' + commitMessage);
           if (fixInfo) {
             // Validate commit made the correct changes and record attempt
@@ -231,9 +240,9 @@ exports.handlePush = async (robot, context) => {
           } else {
             context.log('Incorrect convention');
             if (traceAttempts) await addAttempt(context, owner, repo, email, defaultAttemptTitle);
-            await conventionIssue(context, commitMessage);
+            await conventionIssue(context, commitMessage1);
           }
-    }
+    //}
   } else {
     context.log('Invalid repo, bot action or action done after grading without multiple attempts on');
     context.log(repo);

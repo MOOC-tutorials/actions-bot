@@ -21,19 +21,12 @@ errorNoIssueOpen:
     asociado a: '
 errorConventionIssue:
   title: Un commit que no sigue la convención de código o FIX a realizar
-  body: |-
-    La convención de código a seguir:
-    - Para los arreglos: `<Identificador de la corrección>: <Comentario>`
-    - Para los arreglos con conflictos: `<Identificador de la corrección>: <Comentario por defecto del merge>`
-
-    Igualmente, solo hay 3 fixes a realizar. Al realizar uno y completarlo se creará un issue con las instrucciones a realizar para el siguiente.
-    
-    Para realizar la corrección del mensaje de commit `git commit --amend` y `git commit push -f`
+  body: L
 errorCommentIssue:
   labels:
   - bug
   body: 'Al parecer los cambios realizados no son los esperados. A continuación puedes
-    encontrar más información al respecto:\n'
+    encontrar más información al respecto:'
 errorInvalidIssueNumber:
   body: Al parecer los cambios realizados se identificaron con el identificador de corrección
     incorrecto.
@@ -42,25 +35,16 @@ initialIssue:
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### Identificador de corrección: `FIX1` \n\n### Errores a corregir:\n- pagina5.html.  La imagen
-    y el título de la página no corresponden.\n- pagina3.html.  El link del final
-    de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
-    el link de la imagen a 'BD5.gif' y el texto del título que se encuentra debajo de
-    la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de navegación a la página siguiente ('pagina4.html')
-    y colocarle el nombre correcto ('Mi cuarta página HTML')."
+  body: "### Identificador de corrección: `FIX1` \n\n### Errores a corregir:
+  \n- En `pagina5.html`.  La imagen y el título de la página no corresponden.
+  \n- En `pagina3.html`.  El link a la página siguiente apunta a una dirección equivocada. 
+  \n\n### Soluciones:\n - En `pagina5.html`, cambiar la ruta de la imagen con id `imagen5` por
+  `../imagenes/BD5.gif` y el texto del título con id `titulo5` por `Mi quinta página HTML`.
+  \n- En `pagina3.html`, cambiar el link de navegación con id `enlace3` por `pagina4.html` y
+  colocarle el nombre correcto `Mi cuarta página HTML`."
 fixes:
 - title: FIX1
   files:
-  - filename: html/pagina1.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo1"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen1"
-      attribute: src
-      value: "../imagenes/BD1.gif"
   - filename: html/pagina3.html
     expectedValues:
     - type: DOM
@@ -86,12 +70,15 @@ fixes:
     labels:
     - bug
     title: 'ISSUE 2: Corrección de páginas 1 y 4'
-    body: "### Identificador de corrección: `FIX2` \n\n### Errores a corregir:\n\n- pagina1.html.  El link
-      del final de la hoja debe ir a la página 2.\n- pagina4.html.  El link del final
-      de la hoja debe ir a la página 5. \n\n### Soluciones:\n\n- En `pagina1.html`,
-      \ cambiar el link de la navegación y colocarle el nombre correcto ('Mi segunda
-      página HTML').\n- En `pagina4.html`, cambiar el link de la navegación y colocarle
-      el nombre correcto ('Mi quinta página HTML')."
+    body: "### Identificador de corrección: `FIX2` 
+    \n\n Recuerde actualizar el repositorio local (`git pull`) antes de continuar.
+    \n\n### Errores a corregir:
+    \n\n- En `pagina1.html` y `pagina4.html`. Los links a las páginas siguientes apuntan a rutas equivocadas.
+    \n\n### Soluciones:
+    \n\n- En `pagina1.html`, cambiar el link de navegación con id `enlace1` por `pagina2.html` y 
+    colocarle el nombre correcto `Mi segunda página HTML`.
+    \n- En `pagina4.html`, cambiar el link
+    de navegación con id `enlace4` por `pagina5.html` y colocarle el nombre correcto `Mi quinta página HTML`."
   actions:
   - type: DOM
     data:
@@ -125,14 +112,6 @@ fixes:
   - filename: html/pagina1.html
     expectedValues:
     - type: DOM
-      querySelector: "#titulo1"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen1"
-      attribute: src
-      value: "../imagenes/BD1.gif"
-    - type: DOM
       querySelector: "#enlace1"
       attribute: href
       value: pagina2.html
@@ -140,34 +119,8 @@ fixes:
       querySelector: "#enlace1"
       attribute: textContent
       value: Mi segunda página HTML
-  - filename: html/pagina3.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo3"
-      attribute: textContent
-      value: Mi tercera página HTML
-    - type: DOM
-      querySelector: "#imagen3"
-      attribute: src
-      value: "../imagenes/BD3.gif"
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: href
-      value: pagina4.html
   - filename: html/pagina4.html
     expectedValues:
-    - type: DOM
-      querySelector: "#titulo4"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#imagen4"
-      attribute: src
-      value: "../imagenes/BD4.gif"
     - type: DOM
       querySelector: "#enlace4"
       attribute: textContent
@@ -176,53 +129,20 @@ fixes:
       querySelector: "#enlace4"
       attribute: href
       value: pagina5.html
-  - filename: html/pagina5.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: href
-      value: pagina1.html
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen5"
-      attribute: src
-      value: "../imagenes/BD5.gif"
-    - type: DOM
-      querySelector: "#titulo5"
-      attribute: textContent
-      value: Mi quinta página HTML
   nextIssue:
     number: 3
     labels:
     - bug
     title: 'ISSUE 3: Corrección de página 2'
-    body: "### Identificador de corrección: `FIX3` \n\n### Errores a corregir:\n\n- pagina2.html.  La imagen
-      y el título de la página no son correctos.\n\n### Soluciones:\n\n- En `pagina2.html`,
-      cambiar el link de la imagen a BD2.gif y el texto del título que se encuentra
-      debajo de la imagen por 'Mi segunda página HTML'."
+    body: "### Identificador de corrección: `FIX3` 
+    \n\n Recuerde actualizar el repositorio local (`git pull`) antes de continuar.
+    \n\n### Errores a corregir:
+    \n\n- En `pagina2.html`.  La imagen y el título de la página no corresponden.
+    \n\n### Soluciones:\n\nCambiar en `pagina2.html`:
+    \n- La ruta de la imagen con id `imagen2` por `../imagenes/BD2.gif`.
+    \n- El texto del título con id `titulo2` por `Mi segunda página HTML`."
 - title: FIX3
   files:
-  - filename: html/pagina1.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo1"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen1"
-      attribute: src
-      value: "../imagenes/BD1.gif"
-    - type: DOM
-      querySelector: "#enlace1"
-      attribute: href
-      value: pagina2.html
-    - type: DOM
-      querySelector: "#enlace1"
-      attribute: textContent
-      value: Mi segunda página HTML
   - filename: html/pagina2.html
     expectedValues:
     - type: DOM
@@ -233,60 +153,6 @@ fixes:
       querySelector: "#imagen2"
       attribute: src
       value: "../imagenes/BD2.gif"
-  - filename: html/pagina3.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo3"
-      attribute: textContent
-      value: Mi tercera página HTML
-    - type: DOM
-      querySelector: "#imagen3"
-      attribute: src
-      value: "../imagenes/BD3.gif"
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#enlace3"
-      attribute: href
-      value: pagina4.html
-  - filename: html/pagina4.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo4"
-      attribute: textContent
-      value: Mi cuarta página HTML
-    - type: DOM
-      querySelector: "#imagen4"
-      attribute: src
-      value: "../imagenes/BD4.gif"
-    - type: DOM
-      querySelector: "#enlace4"
-      attribute: textContent
-      value: Mi quinta página HTML
-    - type: DOM
-      querySelector: "#enlace4"
-      attribute: href
-      value: pagina5.html
-  - filename: html/pagina5.html
-    expectedValues:
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: href
-      value: pagina1.html
-    - type: DOM
-      querySelector: "#enlace5"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen5"
-      attribute: src
-      value: "../imagenes/BD5.gif"
-    - type: DOM
-      querySelector: "#titulo5"
-      attribute: textContent
-      value: Mi quinta página HTML
   nextIssue:
     number: 4
     title: Final del ejercicio

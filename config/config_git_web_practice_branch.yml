@@ -21,12 +21,7 @@ errorNoIssueOpen:
     asociado a:'
 errorConventionIssue:
   title: Un commit que no sigue la convención de código o arreglo a realizar
-  body: |-
-    La convención de código a seguir: `<Identificador comentario>: <Comentario>`
-
-    Igualmente, solo hay 1 arreglo a realizar. Al realizar cada paso y completarlo se creará un issue con las instrucciones a realizar para continuar.
-    
-    Para realizar la corrección del mensaje de commit usar `git commit --amend` y `git commit push -f`
+  body: L
 errorCommentIssue:
   labels:
   - bug
@@ -39,27 +34,17 @@ initialIssue:
   labels:
   - bug
   title: 'ISSUE 1: Corrección de páginas 5 y 3'
-  body: "### Identificador del error o acción: FIX1 \n\n### Errores a corregir:\n- pagina5.html.  La imagen
-    y el título de la página no corresponden.\n- pagina3.html.  El link del final
-    de la hoja debe ir a la página 4. \n\n### Soluciones:\n - En `pagina5.html`, cambiar
-    el link de la imagen a BD5.gif y el texto del título que se encuentra debajo de
-    la imagen por 'Mi quinta página HTML'.\n- En `pagina3.html`, cambiar el link de navegación
-    a la siguiente página y colocarle el nombre correcto ('Mi cuarta página HTML').\n\n ### Condiciones:\n- Los cambios 
-    deben ser realizados en una nueva rama con el nombre `fix_1`"
+  body: "### Identificador de corrección: `FIX1` 
+  \n\nCree una rama con el nombre `fix_1` y muevase a dicha rama para corregir los siguientes errores:
+  \n- En `pagina5.html`.  La imagen y el título de la página no corresponden.
+  \n- En `pagina3.html`.  El link a la página siguiente apunta a una dirección equivocada. 
+  \n\n### Soluciones:\n - En `pagina5.html`, cambiar la ruta de la imagen con id `imagen5` por
+  `../imagenes/BD5.gif` y el texto del título con id `titulo5` por `Mi quinta página HTML`.
+  \n- En `pagina3.html`, cambiar el link de navegación con id `enlace3` por `pagina4.html` y
+  colocarle el nombre correcto `Mi cuarta página HTML`."
 fixes:
 - title: FIX1
   files:
-  - filename: html/pagina1.html
-    ref: refs/heads/fix_1
-    expectedValues:
-    - type: DOM
-      querySelector: "#titulo1"
-      attribute: textContent
-      value: Mi primera página HTML
-    - type: DOM
-      querySelector: "#imagen1"
-      attribute: src
-      value: "../imagenes/BD1.gif"
   - filename: html/pagina3.html
     ref: refs/heads/fix_1
     expectedValues:
@@ -87,10 +72,11 @@ fixes:
     labels:
     - bug
     title: 'ISSUE 2: Merge de correcciones de las páginas 3 y 5'
-    body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:\n\n- Hacer merge de la rama creada anteriormente 
-    (`fix_1`) con la rama de integración `master`\n\n **NOTA:** Recuerde que para la identificación de la acción requerida es necesario
-    Establecer como comentario del commit de merge algo como `MERGE1: Merge de las correcciones`. Igualmente, antes de hacer el merge, actualice
-    la rama local `master` con un `pull` para obetener los últimos cambios que puedan haber pasado sobre la misma."
+    body: "### Identificador del error o acción: MERGE1 \n\n### Acciones a realizar:
+    \n\n- Hacer pull para actualizar el repositorio local.
+    \n- Hacer merge de la rama `fix_1` con la rama de integración `master`.
+    \n\n **NOTA:** Recuerde que para la identificación de la acción requerida es necesario
+    Establecer como comentario del commit de merge `MERGE1: Merge de las correcciones`."
   actions:
   - type: DOM
     data:

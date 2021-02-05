@@ -23,8 +23,8 @@ exports.conventionIssue = async (context, commitMessage) => {
   const {data} = await api.issues.listForRepo({owner, repo, state: 'open', labels:['documentation']});
   //context.log(data);
   if(data.length > 0){
-    body = '@'+ owner + ' , no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
-    const {number} = data[0]
+    body = '@'+ owner + ' , no se siguió la convención para los mensajes de los commits. El último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n';
+    const {number} = data[0];
     await api.issues.createComment({
           owner,
           repo,
@@ -33,7 +33,9 @@ exports.conventionIssue = async (context, commitMessage) => {
     });
     context.log('Convention Comment created - Issue: ' + number);
   } else {
-    body += '\nEl último commit tiene el siguiente mensaje: \n`' + commitMessage + '`\n'
+    body += 'a convención del mensaje del último commit no es la esperada: \n`' + commitMessage + '`\n\n'
+         + 'Recuerde que debe tener el siguiente formato: `<Identificador de la corrección>: <Comentario>`\n'
+         + 'Para realizar la corrección del mensaje de commit ejecute los comandos `git commit --amend` y `git push -f`\n\n'
          + 'Este issue es solo un recordatorio de la convención de comentarios en los commits y puede ser cerrado.';
     await api.issues.create({
       owner,
