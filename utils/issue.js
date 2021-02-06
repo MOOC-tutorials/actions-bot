@@ -57,6 +57,9 @@ exports.closeOpenIssues = async (context, owner, repo) => {
     if(data.length > 0){
      context.log('Close issues');
      data.forEach(async (issue) => {
+         context.log("====================================================");
+         context.log(issue);
+         context.log("====================================================");
          const { number } = issue;
          const issueInfo = await api.issues.update({
            owner,
