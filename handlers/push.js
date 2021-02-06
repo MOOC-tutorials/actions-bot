@@ -129,54 +129,75 @@ const invalidCommit = async (context, fixInfo, commitMessage, rawFeedback, curre
     if(!currentFiles){
       currentFiles = files;
     }
-    context.log("--------------------rawFeedback");
     context.log(rawFeedback);
     const filesToObject = {...currentFiles};
     const expectedChanges = prettifyJson(filesToObject, rawFeedback);
-    body += '\n`' + commitMessage + '`\n\n' + expectedChanges;
-    context.log(owner);
-    context.log(repo);    
-    const {data} = await api.issues.listForRepo({
-      owner,
-      repo,
-      labels,
-      state: 'open',
-      direction: 'asc'
-    });
-    context.log(data.length);
-    if(data.length > 0){
-      const {number} = data[0];
-      if(data[0].body.includes(title)){
-        context.log('Comment for fix: '+ title);  
-        const issueComment = await api.issues.createComment({
-          owner,
-          repo,
-          issue_number: number,
-          body
-        });
-        context.log(issueComment);  
-      } else if(config.errorInvalidIssueNumber) {
-        context.log('Comment for fix: '+ title);
-        body =  config.errorInvalidIssueNumber.body;
-        const issueComment = await api.issues.createComment({
-          owner,
-          repo,
-          issue_number: number,
-          body
-        });
-        context.log(issueComment);  
-        
-      }
-    } else {
-      context.log('Comment for fix: '+ title);
-        body =  config.errorNoIssueOpen.body + title;
-        const issuetitle = config.errorNoIssueOpen.title;
+    if(!expectedChanges){
+      let newIssueCreated;
+      //Close open issues
+      await closeOpenIssues(context, owner, repo);
+      // Create new issue
+      const {number = 1} = newIssueCreated || {}  // NOTE: Needed to evaluate just one commit per fix if multiple attempts in a single push were made
+      if(fixInfo.nextIssue !== newIssueCreated && fixInfo.nextIssue.number > number){
+        newIssueCreated = fixInfo.nextIssue;
+        const {title, body, labels} = fixInfo.nextIssue;
+        context.log(title + ' created');
         await api.issues.create({
           owner,
           repo,
-          title: issuetitle,
-          body
+          title,
+          body,
+          assignees: [owner],
+          labels
         });
+      }
+    }
+    else {
+      body += '\n`' + commitMessage + '`\n\n' + expectedChanges;
+      context.log(owner);
+      context.log(repo);    
+      const {data} = await api.issues.listForRepo({
+        owner,
+        repo,
+        labels,
+        state: 'open',
+        direction: 'asc'
+      });
+      context.log(data.length);
+      if(data.length > 0){
+        const {number} = data[0];
+        if(data[0].body.includes(title)){
+          context.log('Comment for fix: '+ title);  
+          const issueComment = await api.issues.createComment({
+            owner,
+            repo,
+            issue_number: number,
+            body
+          });
+          context.log(issueComment);  
+        } else if(config.errorInvalidIssueNumber) {
+          context.log('Comment for fix: '+ title);
+          body =  config.errorInvalidIssueNumber.body;
+          const issueComment = await api.issues.createComment({
+            owner,
+            repo,
+            issue_number: number,
+            body
+          });
+          context.log(issueComment);  
+
+        }
+      } else {
+        context.log('Comment for fix: '+ title);
+          body =  config.errorNoIssueOpen.body + title;
+          const issuetitle = config.errorNoIssueOpen.title;
+          await api.issues.create({
+            owner,
+            repo,
+            title: issuetitle,
+            body
+          });
+      }
     }
   }
 }
